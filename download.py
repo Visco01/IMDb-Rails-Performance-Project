@@ -19,23 +19,22 @@ def extract_file(filename: str) -> None:
 
 def main() -> None:
     URL = "https://datasets.imdbws.com/"
-    BASICS = "title.basics.tsv.gz"
-    RATINGS = "title.ratings.tsv.gz"
     OUT_DIR = "out/"
 
-    os.makedirs(OUT_DIR, exist_ok=True)
+    datasets = [
+        "title.basics.tsv.gz",
+        "title.ratings.tsv.gz"
+    ]
 
-    with Pool(2) as pool:
+    os.makedirs(OUT_DIR, exist_ok=True)
+    
+    print("Start")
+    with Pool(len(datasets)) as pool:
         pool.starmap(
             download_file,
-            [
-                (f'{URL}{BASICS}', f'{OUT_DIR}{BASICS}'),
-                (f'{URL}{RATINGS}', f'{OUT_DIR}{RATINGS}')
-            ]
+            map(lambda file: (f'{URL}{file}', f'{OUT_DIR}{file}'), datasets)
         )
-        print("Files downloaded")
-        pool.map(extract_file, [f'{OUT_DIR}{BASICS}', f'{OUT_DIR}{RATINGS}'])
-        print("Files extracted")
+        pool.map(extract_file, map(lambda file: f'{OUT_DIR}{file}', datasets))
     print("Done.")
 
 
