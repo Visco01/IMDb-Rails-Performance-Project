@@ -1,0 +1,2 @@
+class TitleRating < ApplicationRecord
+end

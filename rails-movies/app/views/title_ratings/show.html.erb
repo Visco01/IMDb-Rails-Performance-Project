@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @title_rating %>
+
+<div>
+  <%= link_to "Edit this title rating", edit_title_rating_path(@title_rating) %> |
+  <%= link_to "Back to title ratings", title_ratings_path %>
+
+  <%= button_to "Destroy this title rating", @title_rating, method: :delete %>
+</div>

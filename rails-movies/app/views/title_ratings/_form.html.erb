@@ -1,0 +1,32 @@
+<%= form_with(model: title_rating) do |form| %>
+  <% if title_rating.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(title_rating.errors.count, "error") %> prohibited this title_rating from being saved:</h2>
+
+      <ul>
+        <% title_rating.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :tconst, style: "display: block" %>
+    <%= form.number_field :tconst %>
+  </div>
+
+  <div>
+    <%= form.label :average_rating, style: "display: block" %>
+    <%= form.text_field :average_rating %>
+  </div>
+
+  <div>
+    <%= form.label :num_votes, style: "display: block" %>
+    <%= form.number_field :num_votes %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
