@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_11_093835) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_11_095108) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -53,4 +53,5 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_11_093835) do
 
   add_foreign_key "genres_title_basics", "genres"
   add_foreign_key "genres_title_basics", "title_basics"
+  add_foreign_key "title_ratings", "title_basics", column: "id"
 end
