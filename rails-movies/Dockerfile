@@ -25,7 +25,7 @@ RUN apt-get update -qq && \
 COPY Gemfile Gemfile.lock ./
 RUN bundle install && \
     rm -rf ~/.bundle/ "${BUNDLE_PATH}"/ruby/*/cache "${BUNDLE_PATH}"/ruby/*/bundler/gems/*/.git && \
-    bundle exec bootsnap precompile --gemfile
+    bundle exec bootsnap precompile --gemfile && gem update rake
 
 # Copy application code
 COPY . .
@@ -53,6 +53,8 @@ COPY --from=build /rails /rails
 RUN useradd rails --create-home --shell /bin/bash && \
     chown -R rails:rails db log storage tmp
 USER rails:rails
+
+RUN echo 'alias rails="./bin/rails"' >> ~/.bashrc
 
 # Entrypoint prepares the database.
 ENTRYPOINT ["/rails/bin/docker-entrypoint"]
