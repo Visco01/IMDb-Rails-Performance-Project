@@ -22,3 +22,9 @@ Things you may want to cover:
 * Deployment instructions
 
 * ...
+
+TODO:
+* aggiungere 'not null' 
+* fare relazioni su orm
+* rivedere task download
+* inserire dati nel DB
