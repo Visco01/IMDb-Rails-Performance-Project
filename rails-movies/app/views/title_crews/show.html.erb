@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @title_crew %>
+
+<div>
+  <%= link_to "Edit this title crew", edit_title_crew_path(@title_crew) %> |
+  <%= link_to "Back to title crews", title_crews_path %>
+
+  <%= button_to "Destroy this title crew", @title_crew, method: :delete %>
+</div>

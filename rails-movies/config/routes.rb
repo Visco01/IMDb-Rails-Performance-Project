@@ -1,9 +1,9 @@
 Rails.application.routes.draw do
+  resources :title_crews
   resources :title_principals
   resources :title_episodes
   resources :professions
   resources :name_basics
-  resources :crews
   resources :attributes
   resources :types
   resources :title_akas

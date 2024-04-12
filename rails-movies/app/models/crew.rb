@@ -1,2 +1,0 @@
-class Crew < ApplicationRecord
-end

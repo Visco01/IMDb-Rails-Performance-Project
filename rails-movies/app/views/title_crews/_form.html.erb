@@ -1,10 +1,10 @@
-<%= form_with(model: crew) do |form| %>
-  <% if crew.errors.any? %>
+<%= form_with(model: title_crew) do |form| %>
+  <% if title_crew.errors.any? %>
     <div style="color: red">
-      <h2><%= pluralize(crew.errors.count, "error") %> prohibited this crew from being saved:</h2>
+      <h2><%= pluralize(title_crew.errors.count, "error") %> prohibited this title_crew from being saved:</h2>
 
       <ul>
-        <% crew.errors.each do |error| %>
+        <% title_crew.errors.each do |error| %>
           <li><%= error.full_message %></li>
         <% end %>
       </ul>

@@ -10,12 +10,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_12_094906) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_12_135226) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "attributes", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -27,17 +27,11 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_094906) do
     t.index ["title_aka_id", "attribute_id"], name: "index_attributes_title_akas_on_title_aka_id_and_attribute_id"
   end
 
-  create_table "crews", force: :cascade do |t|
-    t.integer "tconst"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "directors", id: false, force: :cascade do |t|
-    t.bigint "crew_id", null: false
+    t.bigint "title_crew_id", null: false
     t.bigint "name_basic_id", null: false
-    t.index ["crew_id", "name_basic_id"], name: "index_directors_on_crew_id_and_name_basic_id"
-    t.index ["name_basic_id", "crew_id"], name: "index_directors_on_name_basic_id_and_crew_id"
+    t.index ["name_basic_id", "title_crew_id"], name: "index_directors_on_name_basic_id_and_title_crew_id"
+    t.index ["title_crew_id", "name_basic_id"], name: "index_directors_on_title_crew_id_and_name_basic_id"
   end
 
   create_table "genres", force: :cascade do |t|
@@ -56,8 +50,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_094906) do
 
   create_table "name_basics", force: :cascade do |t|
     t.integer "nconst", null: false
-    t.string "primary_name"
-    t.integer "birth_year"
+    t.string "primary_name", null: false
+    t.integer "birth_year", null: false
     t.integer "death_year"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -79,14 +73,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_094906) do
   end
 
   create_table "professions", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["name"], name: "index_professions_on_name", unique: true
   end
 
   create_table "title_akas", force: :cascade do |t|
-    t.integer "title_id"
+    t.integer "title_id", null: false
     t.integer "ordering"
     t.string "title"
     t.string "region"
@@ -118,8 +112,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_094906) do
     t.index ["tconst"], name: "index_title_basics_on_tconst", unique: true
   end
 
+  create_table "title_crews", force: :cascade do |t|
+    t.integer "tconst", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "title_episodes", force: :cascade do |t|
-    t.integer "tconst"
+    t.integer "tconst", null: false
     t.integer "parent_tconst"
     t.integer "season_number"
     t.integer "episode_number"
@@ -128,9 +128,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_094906) do
   end
 
   create_table "title_principals", force: :cascade do |t|
-    t.integer "tconst"
+    t.integer "tconst", null: false
     t.integer "ordering"
-    t.integer "nconst"
+    t.integer "nconst", null: false
     t.string "category"
     t.string "job"
     t.string "characters"
@@ -148,22 +148,22 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_094906) do
   end
 
   create_table "types", force: :cascade do |t|
-    t.string "name"
+    t.string "name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
 
   create_table "writers", id: false, force: :cascade do |t|
-    t.bigint "crew_id", null: false
+    t.bigint "title_crew_id", null: false
     t.bigint "name_basic_id", null: false
-    t.index ["crew_id", "name_basic_id"], name: "index_writers_on_crew_id_and_name_basic_id"
-    t.index ["name_basic_id", "crew_id"], name: "index_writers_on_name_basic_id_and_crew_id"
+    t.index ["name_basic_id", "title_crew_id"], name: "index_writers_on_name_basic_id_and_title_crew_id"
+    t.index ["title_crew_id", "name_basic_id"], name: "index_writers_on_title_crew_id_and_name_basic_id"
   end
 
   add_foreign_key "attributes_title_akas", "attributes"
   add_foreign_key "attributes_title_akas", "title_akas"
-  add_foreign_key "directors", "crews"
   add_foreign_key "directors", "name_basics"
+  add_foreign_key "directors", "title_crews"
   add_foreign_key "genres_title_basics", "genres"
   add_foreign_key "genres_title_basics", "title_basics"
   add_foreign_key "name_basics_professions", "name_basics"
@@ -173,7 +173,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_094906) do
   add_foreign_key "title_akas", "title_basics", column: "id"
   add_foreign_key "title_akas_types", "title_akas"
   add_foreign_key "title_akas_types", "types"
+  add_foreign_key "title_crews", "title_basics", column: "id"
+  add_foreign_key "title_principals", "title_basics", column: "id"
   add_foreign_key "title_ratings", "title_basics", column: "id"
-  add_foreign_key "writers", "crews"
   add_foreign_key "writers", "name_basics"
+  add_foreign_key "writers", "title_crews"
 end
