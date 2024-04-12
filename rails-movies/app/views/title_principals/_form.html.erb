@@ -1,0 +1,47 @@
+<%= form_with(model: title_principal) do |form| %>
+  <% if title_principal.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(title_principal.errors.count, "error") %> prohibited this title_principal from being saved:</h2>
+
+      <ul>
+        <% title_principal.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :tconst, style: "display: block" %>
+    <%= form.number_field :tconst %>
+  </div>
+
+  <div>
+    <%= form.label :ordering, style: "display: block" %>
+    <%= form.number_field :ordering %>
+  </div>
+
+  <div>
+    <%= form.label :nconst, style: "display: block" %>
+    <%= form.number_field :nconst %>
+  </div>
+
+  <div>
+    <%= form.label :category, style: "display: block" %>
+    <%= form.text_field :category %>
+  </div>
+
+  <div>
+    <%= form.label :job, style: "display: block" %>
+    <%= form.text_field :job %>
+  </div>
+
+  <div>
+    <%= form.label :characters, style: "display: block" %>
+    <%= form.text_field :characters %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

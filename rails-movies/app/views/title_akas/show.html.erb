@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @title_aka %>
+
+<div>
+  <%= link_to "Edit this title aka", edit_title_aka_path(@title_aka) %> |
+  <%= link_to "Back to title akas", title_akas_path %>
+
+  <%= button_to "Destroy this title aka", @title_aka, method: :delete %>
+</div>

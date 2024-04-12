@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Title principals</h1>
+
+<div id="title_principals">
+  <% @title_principals.each do |title_principal| %>
+    <%= render title_principal %>
+    <p>
+      <%= link_to "Show this title principal", title_principal %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New title principal", new_title_principal_path %>

@@ -37,8 +37,6 @@ gem "redis", ">= 4.0.1"
 
 gem 'tsv', '~> 1.0'
 
-gem 'csv', '~> 3.3'
-
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 

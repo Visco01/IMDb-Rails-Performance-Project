@@ -1,0 +1,2 @@
+class TitleAka < ApplicationRecord
+end

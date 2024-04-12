@@ -1,0 +1,14 @@
+<p style="color: green"><%= notice %></p>
+
+<h1>Title episodes</h1>
+
+<div id="title_episodes">
+  <% @title_episodes.each do |title_episode| %>
+    <%= render title_episode %>
+    <p>
+      <%= link_to "Show this title episode", title_episode %>
+    </p>
+  <% end %>
+</div>
+
+<%= link_to "New title episode", new_title_episode_path %>

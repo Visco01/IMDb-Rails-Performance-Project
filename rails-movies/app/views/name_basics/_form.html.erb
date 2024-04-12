@@ -1,0 +1,37 @@
+<%= form_with(model: name_basic) do |form| %>
+  <% if name_basic.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(name_basic.errors.count, "error") %> prohibited this name_basic from being saved:</h2>
+
+      <ul>
+        <% name_basic.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div>
+    <%= form.label :nconst, style: "display: block" %>
+    <%= form.number_field :nconst %>
+  </div>
+
+  <div>
+    <%= form.label :primary_name, style: "display: block" %>
+    <%= form.text_field :primary_name %>
+  </div>
+
+  <div>
+    <%= form.label :birth_year, style: "display: block" %>
+    <%= form.number_field :birth_year %>
+  </div>
+
+  <div>
+    <%= form.label :death_year, style: "display: block" %>
+    <%= form.number_field :death_year %>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>

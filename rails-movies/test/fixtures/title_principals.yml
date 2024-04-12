@@ -1,0 +1,17 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tconst: 1
+  ordering: 1
+  nconst: 1
+  category: MyString
+  job: MyString
+  characters: MyString
+
+two:
+  tconst: 1
+  ordering: 1
+  nconst: 1
+  category: MyString
+  job: MyString
+  characters: MyString

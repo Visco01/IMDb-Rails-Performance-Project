@@ -1,0 +1,10 @@
+<p style="color: green"><%= notice %></p>
+
+<%= render @title_episode %>
+
+<div>
+  <%= link_to "Edit this title episode", edit_title_episode_path(@title_episode) %> |
+  <%= link_to "Back to title episodes", title_episodes_path %>
+
+  <%= button_to "Destroy this title episode", @title_episode, method: :delete %>
+</div>
