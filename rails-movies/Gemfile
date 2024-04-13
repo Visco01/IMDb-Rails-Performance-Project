@@ -37,6 +37,10 @@ gem "redis", ">= 4.0.1"
 
 gem 'tsv', '~> 1.0'
 
+gem 'tailwindcss-rails', '~> 2.4'
+
+gem 'foreman', '~> 0.88.1'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
