@@ -31,6 +31,7 @@ services:
     volumes:
       - .:/rails
       - app-storage:/rails/storage
+      - ../out:/out
     depends_on:
       - db
     ports:
