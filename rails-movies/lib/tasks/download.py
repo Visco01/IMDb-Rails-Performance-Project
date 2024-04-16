@@ -27,7 +27,7 @@ def download_extract_file(url: str, filename: str) -> None:
 
 def main() -> None:
     URL = "https://datasets.imdbws.com/"
-    OUT_DIR = "out/"
+    OUT_DIR = "../out/"
 
     datasets = [
         "name.basics.tsv.gz",
