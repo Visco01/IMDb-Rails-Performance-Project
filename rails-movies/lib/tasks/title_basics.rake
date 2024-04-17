@@ -11,7 +11,8 @@ namespace :title_basics do
     TSV[file].each_with_index.map do |row, i|
       # break if i > 5
 
-      puts row.inspect
+      puts "Processing record #{i}" if (i % 10_000).zero?
+
       tconst = row['tconst'][2..-1].to_i
       title_type = row['titleType']
       primary_title = row['primaryTitle']
