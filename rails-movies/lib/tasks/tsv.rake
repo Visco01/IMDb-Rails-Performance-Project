@@ -8,18 +8,13 @@ namespace :tsv do
   end
 
   desc "Parse TSV file"
-  task :parse do
-    path = '../out/title.basics.tsv'
-
-    TSV[path].each_with_index.map do |row, i|
-      break if i > 10
-
-      puts row['primaryTitle']
+  task :parse => :environment do
+    title_crews_data = Rake::Task['title_crews:parse'].invoke
+    title_crews_data.each do |row|
+      puts "tconst: #{row[:tconst]}"
+      puts "Directors: #{row[:directors]}"
+      puts "Writers: #{row[:writers]}"
+      puts "----"
     end
-
-    parsed = TSV.parse_file(path)
-    puts parsed.size
-
-    # puts TSV.parse_file("../out/title.basics.tsv").without_header.first.to_h
   end
 end
