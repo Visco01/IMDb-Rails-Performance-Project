@@ -1,1 +1,1 @@
-docker run -it -v .:/app ruby:3.2.2 bash
+docker run -it -v .:/rails-movies -w /rails-movies ruby:3.2.2 bash
