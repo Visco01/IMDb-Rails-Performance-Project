@@ -41,6 +41,8 @@ gem 'tailwindcss-rails', '~> 2.4'
 
 gem 'foreman', '~> 0.88.1'
 
+gem 'kamal', '~> 1.4'
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 
