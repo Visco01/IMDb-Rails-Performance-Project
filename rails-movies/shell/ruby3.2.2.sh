@@ -1,1 +1,0 @@
-docker run -it -v "$(dirname "$(pwd)"):/rails-movies" -w /rails-movies ruby:3.2.2 bash
