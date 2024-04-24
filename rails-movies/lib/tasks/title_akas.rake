@@ -21,7 +21,6 @@ namespace :title_akas do
 
       begin
         title_basic = TitleBasic.find_by(id: titleId)
-        puts title_basic.inspect
         next if title_basic.nil?
 
         title_aka = TitleAka.find_or_create_by(title_basic: title_basic,
