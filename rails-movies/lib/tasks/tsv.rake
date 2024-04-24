@@ -7,14 +7,9 @@ namespace :tsv do
     puts output
   end
 
-  desc "Parse TSV file"
-  task :parse => :environment do
-    title_crews_data = Rake::Task['title_crews:parse'].invoke
-    title_crews_data.each do |row|
-      puts "tconst: #{row[:tconst]}"
-      puts "Directors: #{row[:directors]}"
-      puts "Writers: #{row[:writers]}"
-      puts "----"
-    end
+  desc "Import TSV file"
+  task :import => :environment do
+    Rake::Task['title_basics:parse'].invoke
+    Rake::Task['name_basics:parse'].invoke
   end
 end
