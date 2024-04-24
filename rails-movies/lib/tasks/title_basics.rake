@@ -5,9 +5,6 @@ namespace :title_basics do
     path = ENV['TSV_DIR'] || '../out'
     file = "#{path}/title.basics.tsv"
 
-    TitleBasic.destroy_all
-    Genre.destroy_all
-
     TSV[file].each_with_index.map do |row, i|
       # break if i > 5
 
@@ -37,9 +34,15 @@ namespace :title_basics do
         genres.each do |genre|
           title_basic.genres << Genre.find_or_create_by(name: genre)
         end
-      rescue StandardError => e
-        puts "Error: #{e.message}"
+      rescue ActiveRecord::RecordNotFound
+        next
       end
     end
+  end
+
+  desc "Destroy Title Basics"
+  task :destroy => :environment do
+    TitleBasic.destroy_all
+    Genre.destroy_all
   end
 end
