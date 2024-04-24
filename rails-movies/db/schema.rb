@@ -10,21 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_12_135226) do
+ActiveRecord::Schema[7.1].define(version: 2024_04_24_095411) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "attributes", force: :cascade do |t|
-    t.string "name", null: false
+  create_table "attrs", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
   end
 
-  create_table "attributes_title_akas", id: false, force: :cascade do |t|
+  create_table "attrs_title_akas", id: false, force: :cascade do |t|
     t.bigint "title_aka_id", null: false
-    t.bigint "attribute_id", null: false
-    t.index ["attribute_id", "title_aka_id"], name: "index_attributes_title_akas_on_attribute_id_and_title_aka_id"
-    t.index ["title_aka_id", "attribute_id"], name: "index_attributes_title_akas_on_title_aka_id_and_attribute_id"
+    t.bigint "attr_id", null: false
+    t.index ["attr_id", "title_aka_id"], name: "index_attrs_title_akas_on_attr_id_and_title_aka_id"
+    t.index ["title_aka_id", "attr_id"], name: "index_attrs_title_akas_on_title_aka_id_and_attr_id"
   end
 
   create_table "directors", id: false, force: :cascade do |t|
@@ -160,8 +160,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_12_135226) do
     t.index ["title_crew_id", "name_basic_id"], name: "index_writers_on_title_crew_id_and_name_basic_id"
   end
 
-  add_foreign_key "attributes_title_akas", "attributes"
-  add_foreign_key "attributes_title_akas", "title_akas"
+  add_foreign_key "attrs_title_akas", "attrs"
+  add_foreign_key "attrs_title_akas", "title_akas"
   add_foreign_key "directors", "name_basics"
   add_foreign_key "directors", "title_crews"
   add_foreign_key "genres_title_basics", "genres"
