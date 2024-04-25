@@ -5,23 +5,37 @@ namespace :title_crews do
     path = ENV['TSV_DIR'] || '../out'
     file = "#{path}/title.crew.tsv"
 
-    data = []
-
     TSV[file].each_with_index.map do |row, i|
+
+      puts "Processing record #{i}" if (i % 10_000).zero?
+
       tconst = row['tconst'][2..-1].to_i
       director_ids = row['directors'].split(',').reject { |id| id == '\N' }
       writer_ids = row['writers'].split(',').reject { |id| id == '\N' }
 
-      directors = director_ids.map do |director_id|
-        Director.new(name_basic_id: director_id[2..-1].to_i, title_crew_id: tconst)
+      title_basic = TitleBasic.find_by(tconst: tconst)
+      next if title_basic.nil?
+
+      title_crew = TitleCrew.find_or_create_by(title_basic: title_basic, tconst: tconst)
+
+      director_ids.each do |director_id|
+        director = NameBasic.find_by(nconst: director_id[2..-1].to_i)
+        next if director.nil?
+
+        title_crew.directors << director unless title_crew.directors.include?(director)
       end
 
-      writers = writer_ids.map do |writer_id|
-        Writer.new(name_basic_id: writer_id[2..-1].to_i, title_crew_id: tconst)
-      end
+      writer_ids.each do |writer_id|
+        writer = NameBasic.find_by(nconst: writer_id[2..-1].to_i)
+        next if writer.nil?
 
-      data << { tconst: tconst, directors: directors, writers: writers }
+        title_crew.writers << writer unless title_crew.writers.include?(writer)
+      end
     end
-    data
+  end
+
+  desc "Destroy Title Crews"
+  task :destroy => :environment do
+    TitleCrew.destroy_all
   end
 end
