@@ -23,6 +23,6 @@ Execute the file `access_rails_app.sh` or **preferred**:
 8. Filtra per lunghezza
 
 # TODO
-1. Implementare le query native GAB
-2. Implementarle usando l'orm CESCO
-3. Front-end PIETRO
+1. Implementare le query native CESCO
+2. Implementarle usando l'orm PIETRO
+3. Front-end GAB
