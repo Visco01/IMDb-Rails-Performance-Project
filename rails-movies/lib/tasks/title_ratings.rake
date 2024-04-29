@@ -7,10 +7,12 @@ namespace :title_ratings do
     path = ENV['TSV_DIR'] || '../out'
     file = "#{path}/title.ratings.tsv"
 
+    start_time = Time.now
+
     TSV[file].each_with_index.map do |row, i|
       # break if i > 5
 
-      puts "Processing record #{i}" if (i % 10_000).zero?
+      puts "Title Ratings: Processing record #{i} and time elapsed: #{Time.now - start_time}" if (i % 10_000).zero?
 
       tconst = row['tconst'][2..-1].to_i
       average_rating = row['averageRating'].to_f
@@ -20,12 +22,14 @@ namespace :title_ratings do
         title_basic = TitleBasic.find_by(tconst: tconst)
         next if title_basic.nil?
 
-        title_ratings = TitleRating.find_or_create_by(title_basic: title_basic,
-                                                      tconst: tconst,
-                                                      average_rating: average_rating,
-                                                      num_votes: num_votes)
+        title_rating = TitleRating.new(title_basic: title_basic,
+                                        tconst: tconst,
+                                        average_rating: average_rating,
+                                        num_votes: num_votes)
+
+        title_rating.save!
       end
-    rescue ActiveRecord::RecordNotFound
+    rescue ActiveRecord::RecordNotUnique
       next
     end
   end

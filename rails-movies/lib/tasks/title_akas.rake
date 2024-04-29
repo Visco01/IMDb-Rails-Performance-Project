@@ -4,11 +4,13 @@ namespace :title_akas do
   task :parse => :environment do
     path = ENV['TSV_DIR'] || '../out'
     file = "#{path}/title.akas.tsv"
-    
+
+    start_time = Time.now
+
     TSV[file].each_with_index.map do |row, i|
       # break if i > 5
 
-      puts "Processing record #{i}" if (i % 10_000).zero?
+      puts "Title Akas: Processing record #{i} and time elapsed: #{Time.now - start_time}" if (i % 10_000).zero?
 
       titleId = row['titleId'][2..-1].to_i
       ordering = row['ordering'].to_i
@@ -23,13 +25,15 @@ namespace :title_akas do
         title_basic = TitleBasic.find_by(id: titleId)
         next if title_basic.nil?
 
-        title_aka = TitleAka.find_or_create_by(title_basic: title_basic,
-                                      title_id: title_basic.id,
-                                      ordering: ordering,
-                                      title: title,
-                                      region: region,
-                                      language: language,
-                                      is_original_title: is_original_title)
+        title_aka = TitleAka.new(title_basic: title_basic,
+                                 title_id: titleId,
+                                 ordering: ordering,
+                                 title: title,
+                                 region: region,
+                                 language: language,
+                                 is_original_title: is_original_title)
+
+        title_aka.save!
 
         types.each do |type|
           title_aka.types << Type.find_or_create_by(name: type)
@@ -39,7 +43,8 @@ namespace :title_akas do
           title_aka.attrs << Attr.find_or_create_by(name: attr)
         end
 
-      rescue ActiveRecord::RecordNotFound
+        title_aka.save!
+      rescue ActiveRecord::RecordNotUnique
         next
       end
     end

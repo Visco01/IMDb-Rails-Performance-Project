@@ -5,9 +5,11 @@ namespace :title_principals do
         path = ENV['TSV_DIR'] || '../out'
         file = "#{path}/title.principals.tsv"
 
+        start_time = Time.now
+
         TSV[file].each_with_index.map do |row, i|
 
-            puts "Processing record #{i}" if (i % 10_000).zero?
+            puts "Title Principals: Processing record #{i} and time elapsed: #{Time.now - start_time}" if (i % 10_000).zero?
 
             tconst = row['tconst'][2..-1].to_i
             ordering = row['ordering'].to_i
@@ -21,15 +23,17 @@ namespace :title_principals do
                 name_basic = NameBasic.find_by(nconst: nconst)
                 next if title_basic.nil? || name_basic.nil?
 
-                title_principals = TitlePrincipal.find_or_create_by(title_basic: title_basic,
-                                                                    tconst: tconst,
-                                                                    ordering: ordering,
-                                                                    name_basic: name_basic,
-                                                                    category: category,
-                                                                    job: job,
-                                                                    characters: characters)
+                title_principal = TitlePrincipal.new(title_basic: title_basic,
+                                                     tconst: tconst,
+                                                     ordering: ordering,
+                                                     name_basic: name_basic,
+                                                     category: category,
+                                                     job: job,
+                                                     characters: characters)
+
+                title_principal.save!
             end
-        rescue ActiveRecord::RecordNotFound
+        rescue ActiveRecord::RecordNotUnique
             next
         end
     end

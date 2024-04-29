@@ -5,10 +5,12 @@ namespace :name_basics do
     path = ENV['TSV_DIR'] || '../out'
     file = "#{path}/name.basics.tsv"
 
+    start_time = Time.now
+
     TSV[file].each_with_index.map do |row, i|
       # break if i > 5
 
-      puts "Processing record #{i}" if (i % 10_000).zero?
+      puts "Name Basics: Processing record #{i} and time elapsed: #{Time.now - start_time}" if (i % 10_000).zero?
 
       nconst = row['nconst'][2..-1].to_i
       primary_name = row['primaryName']
@@ -18,11 +20,15 @@ namespace :name_basics do
       known_for_titles = row['knownForTitles'].split(',')
 
       begin
-        name_basic = NameBasic.find_or_create_by(id: nconst,
-                                  nconst: nconst,
-                                  primary_name: primary_name,
-                                  birth_year: birth_year,
-                                  death_year: death_year)
+        name_basic = NameBasic.new(
+          id: nconst,
+          nconst: nconst,
+          primary_name: primary_name,
+          birth_year: birth_year,
+          death_year: death_year
+        )
+
+        name_basic.save!
 
         primary_profession.each do |profession|
           name_basic.professions << Profession.find_or_create_by(name: profession)
@@ -33,7 +39,9 @@ namespace :name_basics do
           # REMOVE THIS CHECK
           name_basic.title_basics << title_basic unless title_basic.nil?
         end
-      rescue ActiveRecord::RecordNotFound
+
+        name_basic.save!
+      rescue ActiveRecord::RecordNotUnique
         next
       end
     end
