@@ -46,4 +46,11 @@ namespace :name_basics do
       end
     end
   end
+
+  desc "Destroy Name Basics"
+  task :destroy => :environment do
+    NameBasic.destroy_all
+    Profession.destroy_all
+    NameBasic.connection.execute("DELETE FROM name_basics_title_basics")
+  end
 end

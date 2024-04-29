@@ -33,4 +33,9 @@ namespace :title_ratings do
       next
     end
   end
+
+  desc "Destroy title.ratings.tsv data"
+  task :destroy => :environment do
+    TitleRating.destroy_all
+  end
 end
