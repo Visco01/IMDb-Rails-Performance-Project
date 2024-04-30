@@ -6,14 +6,13 @@ namespace :title_basics do
     file = "#{path}/title.basics.tsv"
 
     start_time = Time.now
-
-    TSV[file].each_slice(10_000).with_index do |batch, batch_index|
+    slice_length = ENV['TRANSACTION_LENGTH'] || 100_000
+    TSV[file].each_slice(slice_length).with_index do |batch, batch_index|
       ActiveRecord::Base.transaction do
         batch.each_with_index do |row, i|
-          record_index = batch_index * 10_000 + i
+          record_index = batch_index * slice_length + i
 
-          puts "Title Basics: Processing record #{record_index} and time elapsed: #{Time.now - start_time}" if (record_index % 10_000).zero?
-
+          puts "Title Basics: Processing record #{record_index} and time elapsed: #{Time.now - start_time}" if (record_index % slice_length).zero?
           tconst = row['tconst'][2..-1].to_i
           title_type = row['titleType']
           primary_title = row['primaryTitle']
@@ -25,15 +24,17 @@ namespace :title_basics do
           genres = row['genres'].split(',')
 
           begin
-            title_basic = TitleBasic.create(id: tconst,
-                                         tconst: tconst,
-                                         title_type: title_type,
-                                         primary_title: primary_title,
-                                         original_title: original_title,
-                                         is_adult: is_adult,
-                                         start_year: start_year,
-                                         end_year: end_year,
-                                         runtime_minutes: runtime_minutes)
+            title_basic = TitleBasic.create(
+              id: tconst,
+              tconst: tconst,
+              title_type: title_type,
+              primary_title: primary_title,
+              original_title: original_title,
+              is_adult: is_adult,
+              start_year: start_year,
+              end_year: end_year,
+              runtime_minutes: runtime_minutes
+            )
 
             title_basic.save!
 
