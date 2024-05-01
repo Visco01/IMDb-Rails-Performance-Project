@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_25_103524) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_01_152104) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -88,7 +88,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_25_103524) do
     t.boolean "is_original_title"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["title_id"], name: "index_title_akas_on_title_id", unique: true
   end
 
   create_table "title_akas_types", id: false, force: :cascade do |t|
@@ -171,7 +170,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_25_103524) do
   add_foreign_key "name_basics_professions", "professions"
   add_foreign_key "name_basics_title_basics", "name_basics"
   add_foreign_key "name_basics_title_basics", "title_basics"
-  add_foreign_key "title_akas", "title_basics", column: "id"
+  add_foreign_key "title_akas", "title_basics", column: "title_id"
   add_foreign_key "title_akas_types", "title_akas"
   add_foreign_key "title_akas_types", "types"
   add_foreign_key "title_crews", "title_basics", column: "id"

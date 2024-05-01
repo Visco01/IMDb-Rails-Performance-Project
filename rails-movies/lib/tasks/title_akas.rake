@@ -27,12 +27,11 @@ namespace :title_akas do
           is_original_title = row['isOriginalTitle'] == '1'
 
           begin
-            title_basic = TitleBasic.find_by(id: title_id)
+            title_basic = TitleBasic.find_by(tconst: title_id)
             next if title_basic.nil?
 
             title_aka = TitleAka.create(
               title_basic: title_basic,
-              title_id: title_id,
               ordering: ordering,
               title: title,
               region: region,
@@ -51,7 +50,8 @@ namespace :title_akas do
             end
 
             title_aka.save!
-          rescue ActiveRecord::StatementInvalid
+          rescue ActiveRecord::StatementInvalid => e
+            puts e.message
             next
           end
         end
