@@ -6,46 +6,54 @@ namespace :title_akas do
     file = "#{path}/title.akas.tsv"
 
     start_time = Time.now
+    slice_length = (ENV['TRANSACTION_LENGTH'] || 100_000).to_i
 
-    TSV[file].each_with_index.map do |row, i|
+    # TSV[file].each_with_index.map do |row, i|
       # break if i > 5
+    TSV[file].each_slice(slice_length).with_index do |batch, batch_index|
+      ActiveRecord::Base.transaction do
+        batch.each_with_index do |row, i|
+          record_index = batch_index * slice_length + i
+          puts "Title Basics: Processing record #{record_index} and time elapsed: #{Time.now - start_time}" if (record_index % slice_length).zero?
 
-      puts "Title Akas: Processing record #{i} and time elapsed: #{Time.now - start_time}" if (i % 10_000).zero?
+          titleId = row['titleId'][2..-1].to_i
+          ordering = row['ordering'].to_i
+          title = row['title']
+          region = row['region']
+          language = row['language']
+          types = row['types'].split(',')
+          attributes = row['attributes'].split(',')
+          is_original_title = row['isOriginalTitle'] == '1'
 
-      titleId = row['titleId'][2..-1].to_i
-      ordering = row['ordering'].to_i
-      title = row['title']
-      region = row['region']
-      language = row['language']
-      types = row['types'].split(',')
-      attributes = row['attributes'].split(',')
-      is_original_title = row['isOriginalTitle'] == '1'
+          begin
+            title_basic = TitleBasic.find_by(id: titleId)
+            next if title_basic.nil?
 
-      begin
-        title_basic = TitleBasic.find_by(id: titleId)
-        next if title_basic.nil?
+            title_aka = TitleAka.new(
+              title_basic: title_basic,
+              title_id: titleId,
+              ordering: ordering,
+              title: title,
+              region: region,
+              language: language,
+              is_original_title: is_original_title
+            )
 
-        title_aka = TitleAka.new(title_basic: title_basic,
-                                 title_id: titleId,
-                                 ordering: ordering,
-                                 title: title,
-                                 region: region,
-                                 language: language,
-                                 is_original_title: is_original_title)
+            title_aka.save!
 
-        title_aka.save!
+            types.each do |type|
+              title_aka.types << Type.find_or_create_by(name: type)
+            end
 
-        types.each do |type|
-          title_aka.types << Type.find_or_create_by(name: type)
+            attributes.each do |attr|
+              title_aka.attrs << Attr.find_or_create_by(name: attr)
+            end
+
+            title_aka.save!
+          rescue ActiveRecord::StatementInvalid
+            next
+          end
         end
-
-        attributes.each do |attr|
-          title_aka.attrs << Attr.find_or_create_by(name: attr)
-        end
-
-        title_aka.save!
-      rescue ActiveRecord::RecordNotUnique
-        next
       end
     end
   end
