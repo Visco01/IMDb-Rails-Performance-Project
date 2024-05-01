@@ -6,43 +6,46 @@ namespace :name_basics do
     file = "#{path}/name.basics.tsv"
 
     start_time = Time.now
+    slice_length = (ENV['TRANSACTION_LENGTH'] || 100_000).to_i
 
-    TSV[file].each_with_index.map do |row, i|
-      # break if i > 5
+    TSV[file].each_slice(slice_length).with_index do |batch, batch_index|
+      ActiveRecord::Base.transaction do
+        batch.each_with_index do |row, i|
+          record_index = batch_index * slice_length + i
 
-      puts "Name Basics: Processing record #{i} and time elapsed: #{Time.now - start_time}" if (i % 10_000).zero?
+          puts "Name Basics: Processing record #{record_index} and time elapsed: #{Time.now - start_time}" if (record_index % 10_000).zero?
 
-      nconst = row['nconst'][2..-1].to_i
-      primary_name = row['primaryName']
-      birth_year = row['birthYear']
-      death_year = row['deathYear']
-      primary_profession = row['primaryProfession'].split(',')
-      known_for_titles = row['knownForTitles'].split(',')
+          nconst = row['nconst'][2..-1].to_i
+          primary_name = row['primaryName']
+          birth_year = row['birthYear']
+          death_year = row['deathYear']
+          primary_profession = row['primaryProfession'].split(',')
+          known_for_titles = row['knownForTitles'].split(',')
 
-      begin
-        name_basic = NameBasic.new(
-          id: nconst,
-          nconst: nconst,
-          primary_name: primary_name,
-          birth_year: birth_year,
-          death_year: death_year
-        )
+          begin
+            name_basic = NameBasic.new(
+              id: nconst,
+              nconst: nconst,
+              primary_name: primary_name,
+              birth_year: birth_year,
+              death_year: death_year
+            )
 
-        name_basic.save!
+            name_basic.save!
 
-        primary_profession.each do |profession|
-          name_basic.professions << Profession.find_or_create_by(name: profession)
+            primary_profession.each do |profession|
+              name_basic.professions << Profession.find_or_create_by(name: profession)
+            end
+
+            known_for_titles.each do |title|
+              title_basic = TitleBasic.find_by(tconst: title[2..-1].to_i)
+              # REMOVE THIS CHECK
+              name_basic.title_basics << title_basic unless title_basic.nil?
+            end
+          rescue ActiveRecord::StatementInvalid
+            next
+          end
         end
-
-        known_for_titles.each do |title|
-          title_basic = TitleBasic.find_by(tconst: title[2..-1].to_i)
-          # REMOVE THIS CHECK
-          name_basic.title_basics << title_basic unless title_basic.nil?
-        end
-
-        name_basic.save!
-      rescue ActiveRecord::RecordNotUnique
-        next
       end
     end
   end
