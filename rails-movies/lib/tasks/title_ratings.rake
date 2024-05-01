@@ -8,29 +8,35 @@ namespace :title_ratings do
     file = "#{path}/title.ratings.tsv"
 
     start_time = Time.now
-
-    TSV[file].each_with_index.map do |row, i|
+    slice_length = (ENV['TRANSACTION_LENGTH'] || 100_000).to_i
+    # TSV[file].each_with_index.map do |row, i|
       # break if i > 5
+    TSV[file].each_slice(slice_length).with_index do |batch, batch_index|
+      ActiveRecord::Base.transaction do
+        batch.each_with_index do |row, i|
+          record_index = batch_index * slice_length + i
 
-      puts "Title Ratings: Processing record #{i} and time elapsed: #{Time.now - start_time}" if (i % 10_000).zero?
+          puts "Title Basics: Processing record #{record_index} and time elapsed: #{Time.now - start_time}" if (record_index % slice_length).zero?
 
-      tconst = row['tconst'][2..-1].to_i
-      average_rating = row['averageRating'].to_f
-      num_votes = row['numVotes'].to_i
+          tconst = row['tconst'][2..-1].to_i
+          average_rating = row['averageRating'].to_f
+          num_votes = row['numVotes'].to_i
 
-      begin
-        title_basic = TitleBasic.find_by(tconst: tconst)
-        next if title_basic.nil?
+          begin
+            title_basic = TitleBasic.find_by(tconst: tconst)
+            next if title_basic.nil?
 
-        title_rating = TitleRating.new(title_basic: title_basic,
-                                        tconst: tconst,
-                                        average_rating: average_rating,
-                                        num_votes: num_votes)
+            title_rating = TitleRating.new(title_basic: title_basic,
+                                            tconst: tconst,
+                                            average_rating: average_rating,
+                                            num_votes: num_votes)
 
-        title_rating.save!
+            title_rating.save!
+          end
+        rescue ActiveRecord::StatementInvalid
+          next
+        end
       end
-    rescue ActiveRecord::RecordNotUnique
-      next
     end
   end
 

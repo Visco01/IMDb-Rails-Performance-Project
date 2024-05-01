@@ -7,29 +7,39 @@ namespace :title_episodes do
 
     start_time = Time.now
 
-    TSV[file].each_with_index.map do |row, i|
+    # TSV[file].each_with_index.map do |row, i|
       # break if i > 5
+    slice_length = (ENV['TRANSACTION_LENGTH'] || 100_000).to_i
 
-      puts "Title Episodes: Processing record #{i} and time elapsed: #{Time.now - start_time}" if (i % 10_000).zero?
+    TSV[file].each_slice(slice_length).with_index do |batch, batch_index|
+      ActiveRecord::Base.transaction do
+        batch.each_with_index do |row, i|
+          record_index = batch_index * slice_length + i
 
-      tconst = row['tconst'][2..-1].to_i
-      parent_tconst = row['parentTconst'][2..-1].to_i
-      season_number = row['seasonNumber']
-      episode_number = row['episodeNumber']
+          puts "Title Basics: Processing record #{record_index} and time elapsed: #{Time.now - start_time}" if (record_index % slice_length).zero?
 
-      begin
-        title_basics = TitleBasic.find_by(tconst: parent_tconst)
-        next if title_basics.nil?
+          tconst = row['tconst'][2..-1].to_i
+          parent_tconst = row['parentTconst'][2..-1].to_i
+          season_number = row['seasonNumber']
+          episode_number = row['episodeNumber']
 
-        title_episode = TitleEpisode.new(title_basic: title_basics,
-                                          tconst: tconst,
-                                          season_number: season_number,
-                                          episode_number: episode_number)
+          begin
+            title_basics = TitleBasic.find_by(tconst: parent_tconst)
+            next if title_basics.nil?
 
-        title_episode.save!
+            title_episode = TitleEpisode.new(
+              title_basic: title_basics,
+              tconst: tconst,
+              season_number: season_number,
+              episode_number: episode_number
+            )
+
+            title_episode.save!
+          end
+        rescue ActiveRecord::StatementInvalid
+          next
+        end
       end
-    rescue ActiveRecord::RecordNotUnique
-      next
     end
   end
 
