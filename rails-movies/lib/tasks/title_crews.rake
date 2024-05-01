@@ -7,6 +7,7 @@ namespace :title_crews do
 
     start_time = Time.now
     slice_length = (ENV['TRANSACTION_LENGTH'] || 100_000).to_i
+    slice_length = (ENV['TRANSACTION_LENGTH'] || 100_000).to_i
 
     # TSV[file].each_with_index.map do |row, i|
     TSV[file].each_slice(slice_length).with_index do |batch, batch_index|
@@ -19,6 +20,9 @@ namespace :title_crews do
           director_ids = row['directors'].split(',').reject { |id| id == '\N' }
           writer_ids = row['writers'].split(',').reject { |id| id == '\N' }
 
+          begin
+            title_basic = TitleBasic.find_by(tconst: tconst)
+            next if title_basic.nil?
           begin
             title_basic = TitleBasic.find_by(tconst: tconst)
             next if title_basic.nil?
