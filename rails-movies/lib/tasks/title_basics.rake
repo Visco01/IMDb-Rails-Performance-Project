@@ -6,7 +6,7 @@ namespace :title_basics do
     file = "#{path}/title.basics.tsv"
 
     start_time = Time.now
-    slice_length = ENV['TRANSACTION_LENGTH'] || 100_000
+    slice_length = (ENV['TRANSACTION_LENGTH'] || 100_000).to_i
 
     TSV[file].each_slice(slice_length).with_index do |batch, batch_index|
       ActiveRecord::Base.transaction do
@@ -43,7 +43,7 @@ namespace :title_basics do
             genres.each do |genre|
               title_basic.genres << Genre.find_or_create_by(name: genre)
             end
-          rescue ActiveRecord::RecordNotUnique
+          rescue ActiveRecord::StatementInvalid
             next
           end
         end
