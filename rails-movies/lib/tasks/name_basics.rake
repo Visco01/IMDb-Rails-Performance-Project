@@ -23,7 +23,7 @@ namespace :name_basics do
           known_for_titles = row['knownForTitles'].split(',')
 
           begin
-            name_basic = NameBasic.new(
+            name_basic = NameBasic.create(
               id: nconst,
               nconst: nconst,
               primary_name: primary_name,
