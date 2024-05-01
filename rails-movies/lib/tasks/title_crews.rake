@@ -23,9 +23,6 @@ namespace :title_crews do
           begin
             title_basic = TitleBasic.find_by(tconst: tconst)
             next if title_basic.nil?
-          begin
-            title_basic = TitleBasic.find_by(tconst: tconst)
-            next if title_basic.nil?
 
             title_crew = TitleCrew.new(title_basic: title_basic, tconst: tconst)
 
