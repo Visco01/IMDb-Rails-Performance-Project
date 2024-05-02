@@ -38,8 +38,6 @@ namespace :title_basics do
               runtime_minutes: runtime_minutes
             )
 
-            title_basic.save!
-
             genres.each do |genre|
               title_basic.genres << Genre.find_or_create_by(name: genre)
             end

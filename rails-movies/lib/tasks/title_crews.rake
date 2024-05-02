@@ -7,14 +7,13 @@ namespace :title_crews do
 
     start_time = Time.now
     slice_length = (ENV['TRANSACTION_LENGTH'] || 100_000).to_i
-    slice_length = (ENV['TRANSACTION_LENGTH'] || 100_000).to_i
 
-    # TSV[file].each_with_index.map do |row, i|
     TSV[file].each_slice(slice_length).with_index do |batch, batch_index|
       ActiveRecord::Base.transaction do
         batch.each_with_index do |row, i|
           record_index = batch_index * slice_length + i
-          puts "Title Basics: Processing record #{record_index} and time elapsed: #{Time.now - start_time}" if (record_index % slice_length).zero?
+
+          puts "Title Crews: Processing record #{record_index} and time elapsed: #{Time.now - start_time}" if (record_index % 10_000).zero?
 
           tconst = row['tconst'][2..-1].to_i
           director_ids = row['directors'].split(',').reject { |id| id == '\N' }
@@ -24,9 +23,7 @@ namespace :title_crews do
             title_basic = TitleBasic.find_by(tconst: tconst)
             next if title_basic.nil?
 
-            title_crew = TitleCrew.new(title_basic: title_basic, tconst: tconst)
-
-            title_crew.save!
+            title_crew = TitleCrew.create(title_basic: title_basic, tconst: tconst)
 
             director_ids.each do |director_id|
               director = NameBasic.find_by(nconst: director_id[2..-1].to_i)
@@ -41,9 +38,6 @@ namespace :title_crews do
 
               title_crew.writers << writer unless title_crew.writers.include?(writer)
             end
-
-            title_crew.save!
-
           rescue ActiveRecord::StatementInvalid
             next
           end

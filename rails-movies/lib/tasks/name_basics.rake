@@ -31,16 +31,15 @@ namespace :name_basics do
               death_year: death_year
             )
 
-            name_basic.save!
-
             primary_profession.each do |profession|
               name_basic.professions << Profession.find_or_create_by(name: profession)
             end
 
             known_for_titles.each do |title|
               title_basic = TitleBasic.find_by(tconst: title[2..-1].to_i)
-              # REMOVE THIS CHECK
-              name_basic.title_basics << title_basic unless title_basic.nil?
+              next if title_basic.nil?
+
+              name_basic.title_basics << title_basic
             end
           rescue ActiveRecord::StatementInvalid
             next

@@ -16,7 +16,7 @@ namespace :title_ratings do
         batch.each_with_index do |row, i|
           record_index = batch_index * slice_length + i
 
-          puts "Title Basics: Processing record #{record_index} and time elapsed: #{Time.now - start_time}" if (record_index % slice_length).zero?
+          puts "Title Ratings: Processing record #{record_index} and time elapsed: #{Time.now - start_time}" if (record_index % slice_length).zero?
 
           tconst = row['tconst'][2..-1].to_i
           average_rating = row['averageRating'].to_f
@@ -26,15 +26,13 @@ namespace :title_ratings do
             title_basic = TitleBasic.find_by(tconst: tconst)
             next if title_basic.nil?
 
-            title_rating = TitleRating.new(title_basic: title_basic,
+            TitleRating.create(title_basic: title_basic,
                                             tconst: tconst,
                                             average_rating: average_rating,
                                             num_votes: num_votes)
-
-            title_rating.save!
+          rescue ActiveRecord::StatementInvalid
+            next
           end
-        rescue ActiveRecord::StatementInvalid
-          next
         end
       end
     end

@@ -39,8 +39,6 @@ namespace :title_akas do
               is_original_title: is_original_title
             )
 
-            title_aka.save!
-
             types.each do |type|
               title_aka.types << Type.find_or_create_by(name: type)
             end
@@ -50,8 +48,7 @@ namespace :title_akas do
             end
 
             title_aka.save!
-          rescue ActiveRecord::StatementInvalid => e
-            puts e.message
+          rescue ActiveRecord::StatementInvalid
             next
           end
         end
