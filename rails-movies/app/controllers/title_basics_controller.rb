@@ -4,11 +4,13 @@ class TitleBasicsController < ApplicationController
   # GET /title_basics or /title_basics.json
   def index
     page = params[:page] || 1
-    @title_basics = TitleBasic.paginate(page: page, per_page: 15)
-    respond_to do |format|
-      format.html
-      format.json { render json: @title_basics }
+    title = params[:title]
+    if title.present?
+      @title_basics = TitleBasic.where("primary_title LIKE ?", "%#{title}%").paginate(page: page, per_page: 15)
+    else
+      @title_basics = TitleBasic.paginate(page: page, per_page: 15)
     end
+    render json: @title_basics
   end
 
   # GET /title_basics/1 or /title_basics/1.json
