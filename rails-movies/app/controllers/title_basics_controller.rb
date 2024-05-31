@@ -10,7 +10,7 @@ class TitleBasicsController < ApplicationController
     else
       @title_basics = TitleBasic.paginate(page: page, per_page: 15)
     end
-    render json: @title_basics
+    render json: @title_basics, each_serializer: TitleBasicSerializer
   end
 
   # GET /title_basics/1 or /title_basics/1.json
