@@ -5,11 +5,24 @@ class TitleBasicsController < ApplicationController
   def index
     page = params[:page] || 1
     title = params[:title]
+    genre = params[:genre]
+
+    @title_basics = TitleBasic.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
+
     if title.present?
-      @title_basics = TitleBasic.where("primary_title LIKE ?", "%#{title}%").paginate(page: page, per_page: 15)
+      if genre.present?
+        @title_basics = @title_basics.where("primary_title LIKE ?", "%#{title}%").paginate(page: page, per_page: 15)
+      else
+        @title_basics = TitleBasic.where("primary_title LIKE ?", "%#{title}%").paginate(page: page, per_page: 15)
+      end
     else
-      @title_basics = TitleBasic.paginate(page: page, per_page: 15)
+      if genre.present?
+        @title_basics = @title_basics.paginate(page: page, per_page: 15)
+      else
+        @title_basics = TitleBasic.paginate(page: page, per_page: 15)
+      end
     end
+
     render json: @title_basics, each_serializer: TitleBasicSerializer
   end
 

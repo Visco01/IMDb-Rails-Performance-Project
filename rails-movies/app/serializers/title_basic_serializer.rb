@@ -2,6 +2,7 @@ class TitleBasicSerializer < ActiveModel::Serializer
   def attributes(*args)
     object.attributes.symbolize_keys.merge(title_ratings: title_ratings)
       .merge(directors: directors)
+      .merge(genres: genres)
   end
 
   def title_ratings
@@ -22,5 +23,9 @@ class TitleBasicSerializer < ActiveModel::Serializer
     rescue ActiveRecord::RecordNotFound => e
       []
     end
+  end
+
+  def genres
+    object.genres.map(&:name)
   end
 end
