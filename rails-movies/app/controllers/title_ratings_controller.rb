@@ -3,7 +3,16 @@ class TitleRatingsController < ApplicationController
 
   # GET /title_ratings or /title_ratings.json
   def index
-    @title_ratings = TitleRating.all
+    page = params[:page] || 1
+    order_by = params[:order_by]
+
+    if order_by.present?
+      assert_order_by(order_by)
+      @title_ratings = TitleRating.order("#{order_by} DESC").paginate(page: page, per_page: 15)
+    else
+      @title_ratings = TitleRating.paginate(page: page, per_page: 15)
+    end
+    render json: @title_ratings, each_serializer: TitleRatingSerializer, include_title_basic: true
   end
 
   # GET /title_ratings/1 or /title_ratings/1.json
@@ -66,5 +75,11 @@ class TitleRatingsController < ApplicationController
     # Only allow a list of trusted parameters through.
     def title_rating_params
       params.require(:title_rating).permit(:tconst, :average_rating, :num_votes)
+    end
+
+    def assert_order_by(order_by)
+      unless %w[tconst average_rating num_votes].include?(order_by)
+        render json: { error: "Invalid order_by parameter: #{order_by}" }, status: :bad_request
+      end
     end
 end
