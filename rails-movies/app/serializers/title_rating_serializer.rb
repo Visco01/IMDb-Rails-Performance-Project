@@ -1,6 +1,8 @@
 class TitleRatingSerializer < ActiveModel::Serializer
   def attributes(*args)
-    object.attributes.symbolize_keys
+    return object.attributes.symbolize_keys if instance_options[:rating_only] == true
+
+    object.attributes.symbolize_keys.merge(title_basic: title_basic)
   end
 
   def title_basic

@@ -6,7 +6,7 @@ class TitleBasicSerializer < ActiveModel::Serializer
 
   def title_ratings
     TitleRating.where(id: object.id).map do |title_rating|
-      TitleRatingSerializer.new(title_rating, root: false).attributes
+      TitleRatingSerializer.new(title_rating, root: false, rating_only: true).attributes
     end
   end
 

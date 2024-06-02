@@ -12,7 +12,7 @@ class TitleRatingsController < ApplicationController
     else
       @title_ratings = TitleRating.paginate(page: page, per_page: 15)
     end
-    render json: @title_ratings, each_serializer: TitleRatingSerializer, include_title_basic: true
+    render json: @title_ratings, each_serializer: TitleRatingSerializer
   end
 
   # GET /title_ratings/1 or /title_ratings/1.json
