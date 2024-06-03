@@ -7,21 +7,13 @@ class TitleBasicsController < ApplicationController
     title = params[:title]
     genre = params[:genre]
 
-    @title_basics = TitleBasic.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
+    scope = TitleBasic.select(:id, :primary_title, :title_type, :start_year, :is_adult, :runtime_minutes)
 
-    if title.present?
-      if genre.present?
-        @title_basics = @title_basics.where("primary_title LIKE ?", "%#{title}%").paginate(page: page, per_page: 15)
-      else
-        @title_basics = TitleBasic.where("primary_title LIKE ?", "%#{title}%").paginate(page: page, per_page: 15)
-      end
-    else
-      if genre.present?
-        @title_basics = @title_basics.paginate(page: page, per_page: 15)
-      else
-        @title_basics = TitleBasic.paginate(page: page, per_page: 15)
-      end
-    end
+    scope = scope.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
+
+    scope = scope.where('primary_title LIKE ?', "%#{title}%") if title.present?
+
+    @title_basics = scope.paginate(page:, per_page: 15)
 
     render json: @title_basics, each_serializer: TitleBasicSerializer
   end
@@ -78,13 +70,13 @@ class TitleBasicsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_title_basic
-      @title_basic = TitleBasic.find(params[:id])
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_title_basic
+    @title_basic = TitleBasic.find(params[:id])
+  end
 
-    # Only allow a list of trusted parameters through.
-    def title_basic_params
-      params.require(:title_basic).permit(:tconst, :title_type, :primary_title, :original_title, :is_adult, :start_year, :end_year, :runtime_minutes)
-    end
+  # Only allow a list of trusted parameters through.
+  def title_basic_params
+    params.require(:title_basic).permit(:tconst, :title_type, :primary_title, :original_title, :is_adult, :start_year, :end_year, :runtime_minutes)
+  end
 end
