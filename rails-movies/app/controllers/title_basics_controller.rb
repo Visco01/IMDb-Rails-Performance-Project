@@ -6,12 +6,18 @@ class TitleBasicsController < ApplicationController
     page = params[:page] || 1
     title = params[:title]
     genre = params[:genre]
+    max_runtime = params[:max_runtime]
+    adult = params[:adult]
 
     scope = TitleBasic.select(:id, :primary_title, :title_type, :start_year, :is_adult, :runtime_minutes)
 
     scope = scope.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
 
     scope = scope.where('primary_title LIKE ?', "%#{title}%") if title.present?
+
+    scope = scope.where('runtime_minutes <= ?', max_runtime) if max_runtime.present?
+
+    scope = scope.where(is_adult: adult) if adult.present?
 
     @title_basics = scope.paginate(page:, per_page: 15)
 
