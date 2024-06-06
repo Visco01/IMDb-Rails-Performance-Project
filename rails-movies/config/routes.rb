@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'directors', to: 'directors#index'
   get 'actors', to: 'actors#index'
   resources :attrs
   resources :title_crews
