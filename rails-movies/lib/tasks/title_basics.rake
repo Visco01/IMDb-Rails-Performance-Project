@@ -52,9 +52,9 @@ namespace :title_basics do
   desc "Generate title.basics.queryset.csv"
   task :generate_queryset => :environment do
     path = ENV['QUERYSET_DIR'] || './querysets'
-    file = "#{path}/title.basics.queryset.csv"
+    file = "#{path}/title.basics.titles.queryset.csv"
 
-    puts 'Generating title.basics.queryset.csv'
+    puts 'Generating title.basics.titles.queryset.csv'
 
     Dir.mkdir(path) unless File.directory?(path)
 
@@ -77,9 +77,8 @@ namespace :title_basics do
       index = cdf.find_index { |p| p >= random_number }
       title_basic_name = title_ratings[index].title_basic.primary_title
 
-      # Generate query URL
-      query = "http://localhost:3000/title_basics?name=#{title_basic_name}"
-      queries << query
+      # Generate query string
+      queries << title_basic_name
     end
 
     CSV.open(file, "w") do |csv|
