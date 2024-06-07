@@ -37,6 +37,8 @@ gem "redis", ">= 4.0.1"
 
 gem 'tsv', '~> 1.0'
 
+gem 'csv', '~> 3.3'
+
 gem 'parallel', '~> 1.24'
 
 gem 'active_model_serializers', '~> 0.10.14'

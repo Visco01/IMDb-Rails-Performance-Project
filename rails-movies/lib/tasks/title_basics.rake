@@ -49,6 +49,46 @@ namespace :title_basics do
     end
   end
 
+  desc "Generate title.basics.queryset.csv"
+  task :generate_queryset => :environment do
+    path = ENV['QUERYSET_DIR'] || './querysets'
+    file = "#{path}/title.basics.queryset.csv"
+
+    puts 'Generating title.basics.queryset.csv'
+
+    Dir.mkdir(path) unless File.directory?(path)
+
+    title_ratings = TitleRating.select(:id,
+                                        :tconst,
+                                        :average_rating,
+                                        :num_votes)
+                               .joins(:title_basic)
+                               .order('num_votes DESC')
+
+    total_votes = title_ratings.sum(:num_votes)
+    probabilities = title_ratings.map { |tr| tr.num_votes.to_f / total_votes }
+    cdf = probabilities.map.with_index { |p, i| probabilities[0..i].sum }
+
+    queries = []
+    num_queries = 10_000
+
+    num_queries.times do
+      random_number = rand
+      index = cdf.find_index { |p| p >= random_number }
+      title_basic_name = title_ratings[index].title_basic.primary_title
+
+      # Generate query URL
+      query = "http://localhost:3000/title_basics?name=#{title_basic_name}"
+      queries << query
+    end
+
+    CSV.open(file, "w") do |csv|
+      queries.each { |query| csv << [query] }
+    end
+
+    puts "Generated #{file}"
+  end
+
   desc "Destroy Title Basics"
   task :destroy => :environment do
     TitleBasic.destroy_all
