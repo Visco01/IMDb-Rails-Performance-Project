@@ -49,6 +49,39 @@ namespace :name_basics do
     end
   end
 
+  desc "Generate directors.queryset.csv"
+  task :generate_directors_queryset => :environment do
+    path = ENV['QUERYSET_DIR'] || './querysets'
+    file = "#{path}/directors.queryset.csv"
+
+    puts 'Generating directors.queryset.csv'
+
+    Dir.mkdir(path) unless File.directory?(path)
+
+    directors = DirectorWithRating.all
+
+    total_votes = directors.sum(:ratings)
+    probabilities = directors.map { |director| director.ratings.to_f / total_votes }
+    cdf = probabilities.map.with_index { |p, i| probabilities[0..i].sum }
+
+    queries = []
+    num_queries = 10_000
+
+    num_queries.times do
+      puts "Generating query #{queries.size}" if (queries.size % 1000).zero?
+
+      random_number = rand
+      index = cdf.find_index { |p| p >= random_number }
+      director = directors[index]
+
+      # Generate query string
+      queries << director.primary_name
+    end
+
+    CSV.open(file, "w") do |csv|
+      queries.each { |query| csv << [query] }
+    end
+  end
   desc "Destroy Name Basics"
   task :destroy => :environment do
     NameBasic.destroy_all
