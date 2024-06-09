@@ -82,6 +82,54 @@ namespace :name_basics do
       queries.each { |query| csv << [query] }
     end
   end
+
+  desc "Generate actors.queryset.csv"
+  task :generate_actors_queryset => :environment do
+    path = ENV['QUERYSET_DIR'] || './querysets'
+    file = "#{path}/actors.queryset.csv"
+
+    puts 'Generating actors.queryset.csv'
+
+    Dir.mkdir(path) unless File.directory?(path)
+
+    actors = ActorWithRating.all
+
+    total_votes = actors.sum(:ratings)
+    puts "Total votes: #{total_votes}"
+    probabilities = actors.map { |actor| actor.ratings.to_f / total_votes }.compact
+
+    cdf = probabilities.map.with_index { |p, i|
+      puts "CDF #{i} done." if (i % 10_000).zero?
+      probabilities[0..i].sum
+    }.compact
+    puts "CDF done."
+
+    queries = []
+    num_queries = 10_000
+
+    num_queries.times do
+      puts "Generating query #{queries.size}" if (queries.size % 1000).zero?
+
+      random_number = rand
+      index = cdf.find_index { |p| p >= random_number }
+
+      if index.nil?
+        puts "Index is nil"
+        num_queries += 1
+        next
+      end
+
+      actor = actors[index]
+
+      # Generate query string
+      queries << actor.primary_name
+    end
+
+    CSV.open(file, "w") do |csv|
+      queries.each { |query| csv << [query] }
+    end
+  end
+
   desc "Destroy Name Basics"
   task :destroy => :environment do
     NameBasic.destroy_all
