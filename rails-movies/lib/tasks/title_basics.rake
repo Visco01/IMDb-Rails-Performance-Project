@@ -88,6 +88,41 @@ namespace :title_basics do
     puts "Generated #{file}"
   end
 
+  desc "Generate title.basics.queryset.csv by genre, adult, and runtime"
+  task :generate_params_queryset => :environment do
+    path = ENV['QUERYSET_DIR'] || './querysets'
+    file = "#{path}/title.basics.params.queryset.csv"
+
+    puts 'Generating title.basics.params.queryset.csv'
+
+    Dir.mkdir(path) unless File.directory?(path)
+
+    genres = GenrePopularity.all
+    adult = [true, false]
+    runtime_minutes = TitleBasic.select(:runtime_minutes).distinct.pluck(:runtime_minutes)
+
+    total_popularity = genres.sum(:popularity)
+    probabilities = genres.map { |g| g.popularity.to_f / total_popularity }
+    cdf = probabilities.map.with_index { |p, i| probabilities[0..i].sum }
+
+    queries = []
+    num_queries = 10_000
+
+    num_queries.times do
+      random_number = rand
+      index = cdf.find_index { |p| p >= random_number }
+      genre = genres[index]
+
+      # Generate query string
+      queries << [genre.name, adult.sample, runtime_minutes.sample]
+    end
+
+    CSV.open(file, "w") do |csv|
+      queries.each { |query| csv << query }
+    end
+
+    puts "Generated #{file}"
+  end
   desc "Destroy Title Basics"
   task :destroy => :environment do
     TitleBasic.destroy_all
