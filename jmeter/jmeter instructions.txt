@@ -1,7 +1,0 @@
-step 1 - add threads group 
-step 2 - add config element from thread group -> config elements -> HTTP Request Defaults
-step 3 - add HTTP request from thread group -> sampler -> HTTP Request
-step 4 - add cookie manager from thread group -> config elements -> HTTP Cookie manager
-step 5 - add collector from thread group -> listener -> Generate summary results + response time graph (after rune it's possible to generate response time graph)
-step 6 - add thinking time from thread group -> timer -> (choose a timer: constant, Poisson...)
-step 7 - add some logic controllers (next lectures)
