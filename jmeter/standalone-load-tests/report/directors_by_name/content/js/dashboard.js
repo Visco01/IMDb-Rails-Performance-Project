@@ -133,7 +133,7 @@ $(document).ready(function() {
         widgets: ['zebra']
     });
 
-    var data = {"OkPercent": 100.0, "KoPercent": 0.0};
+    var data = {"OkPercent": 99.7463768115942, "KoPercent": 0.2536231884057971};
     var dataset = [
         {
             "label" : "FAIL",
@@ -173,7 +173,7 @@ $(document).ready(function() {
     });
 
     // Creates APDEX table
-    createTable($("#apdexTable"), {"supportsControllersDiscrimination": true, "overall": {"data": [0.05635062611806798, 500, 1500, "Total"], "isController": false}, "titles": ["Apdex", "T (Toleration threshold)", "F (Frustration threshold)", "Label"], "items": [{"data": [0.05635062611806798, 500, 1500, "Directors by name"], "isController": false}]}, function(index, item){
+    createTable($("#apdexTable"), {"supportsControllersDiscrimination": true, "overall": {"data": [0.03786231884057971, 500, 1500, "Total"], "isController": false}, "titles": ["Apdex", "T (Toleration threshold)", "F (Frustration threshold)", "Label"], "items": [{"data": [0.02512562814070352, 500, 1500, "Directors by name"], "isController": false}, {"data": [0.6271186440677966, 500, 1500, "TitleBasics by primary_title"], "isController": false}, {"data": [0.0, 500, 1500, "Actors by name"], "isController": false}, {"data": [0.9487179487179487, 500, 1500, "TitleBasics by params"], "isController": false}]}, function(index, item){
         switch(index){
             case 0:
                 item = item.toFixed(3);
@@ -187,7 +187,7 @@ $(document).ready(function() {
     }, [[0, 0]], 3);
 
     // Create statistics table
-    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 559, 0, 0.0, 2304.1932021466887, 1106, 5551, 2392.0, 2916.0, 3234.0, 3912.8, 0.43069076172168436, 0.47332148460222745, 0.06716075036693467], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["Directors by name", 559, 0, 0.0, 2304.1932021466887, 1106, 5551, 2392.0, 2916.0, 3234.0, 3912.8, 0.43069076172168436, 0.47332148460222745, 0.06716075036693467], "isController": false}]}, function(index, item){
+    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 5520, 14, 0.2536231884057971, 4157.392753623193, 95, 16209, 3890.0, 6718.0, 6758.0, 6789.0, 0.837287316507802, 1.0268264315527478, 0.13088257975389214], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["Directors by name", 5373, 1, 0.018611576400521124, 4172.253117439036, 745, 12667, 3902.0, 6716.0, 6756.0, 6780.0, 0.8149899912312356, 0.923685008131698, 0.12751105139624486], "isController": false}, {"data": ["TitleBasics by primary_title", 59, 1, 1.694915254237288, 737.8474576271186, 109, 2436, 676.0, 1385.0, 1731.0, 2436.0, 0.5181119648737651, 2.7053804198682765, 0.0843252607025247], "isController": false}, {"data": ["Actors by name", 49, 12, 24.489795918367346, 9767.938775510203, 666, 16209, 10669.0, 15571.0, 15835.5, 16209.0, 0.4359818489189429, 0.5847384108906486, 0.05050076741702998], "isController": false}, {"data": ["TitleBasics by params", 39, 0, 0.0, 234.1025641025641, 95, 1717, 159.0, 383.0, 509.0, 1717.0, 0.3477857639693948, 2.7304613651260055, 0.06197023979382546], "isController": false}]}, function(index, item){
         switch(index){
             // Errors pct
             case 3:
@@ -217,7 +217,7 @@ $(document).ready(function() {
     }, [[0, 0]], 0, summaryTableHeader);
 
     // Create error table
-    createTable($("#errorsTable"), {"supportsControllersDiscrimination": false, "titles": ["Type of error", "Number of errors", "% in errors", "% in all samples"], "items": []}, function(index, item){
+    createTable($("#errorsTable"), {"supportsControllersDiscrimination": false, "titles": ["Type of error", "Number of errors", "% in errors", "% in all samples"], "items": [{"data": ["Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed", 14, 100.0, 0.2536231884057971], "isController": false}]}, function(index, item){
         switch(index){
             case 2:
             case 3:
@@ -228,7 +228,7 @@ $(document).ready(function() {
     }, [[1, 1]]);
 
         // Create top5 errors by sampler
-    createTable($("#top5ErrorsBySamplerTable"), {"supportsControllersDiscrimination": false, "overall": {"data": ["Total", 559, 0, "", "", "", "", "", "", "", "", "", ""], "isController": false}, "titles": ["Sample", "#Samples", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors"], "items": [{"data": [], "isController": false}]}, function(index, item){
+    createTable($("#top5ErrorsBySamplerTable"), {"supportsControllersDiscrimination": false, "overall": {"data": ["Total", 5520, 14, "Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed", 14, "", "", "", "", "", "", "", ""], "isController": false}, "titles": ["Sample", "#Samples", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors"], "items": [{"data": ["Directors by name", 5373, 1, "Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed", 1, "", "", "", "", "", "", "", ""], "isController": false}, {"data": ["TitleBasics by primary_title", 59, 1, "Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed", 1, "", "", "", "", "", "", "", ""], "isController": false}, {"data": ["Actors by name", 49, 12, "Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed", 12, "", "", "", "", "", "", "", ""], "isController": false}, {"data": [], "isController": false}]}, function(index, item){
         return item;
     }, [[0, 0]], 0);
 
