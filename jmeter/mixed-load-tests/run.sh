@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+rm -rf ./results/*
 jmeter -n -t "./MoviesRailsMixedTests.jmx" -l "./results/movies_rails_mixed_tests.csv"
 rm -rf ./report/*
 jmeter -g "./results/title_basics_by_title.csv" -o "./report/title_basics_by_title"

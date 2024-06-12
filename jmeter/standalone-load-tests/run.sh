@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 # RUN STANDALONE TESTS
+rm -rf ./results/*
 jmeter -n -t "./MoviesRailsStandaloneTests.jmx" -l "./results/movies_rails_standalone_tests.csv"
 rm -rf ./report/*
 jmeter -g "./results/title_basics_by_title.csv" -o "./report/title_basics_by_title"
