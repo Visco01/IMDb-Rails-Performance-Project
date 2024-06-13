@@ -15,10 +15,10 @@ Execute the file `access_rails_app.sh` or **preferred**:
 # QUERIES
 - [x] Cerca film per nome (con ratings e director)
 - [x] Cerca film per regista
-- [ ] Cerca film per genere
+- [x] Cerca film per genere
 - [ ] Ordina per popolarità
 - [ ] Ordina per ratings
-- [ ] Cerca films per attore
+- [x] Cerca films per attore
 - [ ] Filtra per adult
 - [ ] Filtra per lunghezza
 
