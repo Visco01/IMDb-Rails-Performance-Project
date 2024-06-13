@@ -19,7 +19,7 @@ Execute the file `access_rails_app.sh` or **preferred**:
 - [ ] Ordina per popolarità
 - [ ] Ordina per ratings
 - [x] Cerca films per attore
-- [ ] Filtra per adult
+- [ ] Filtra per adult ==NON SONO STATI INSERITI CORRETTAMENTE==
 - [ ] Filtra per lunghezza
 
 # TODO
