@@ -13,16 +13,16 @@ Execute the file `access_rails_app.sh` or **preferred**:
 3. Now you can just type `rails-app` on any terminal and access the container
 
 # QUERIES
-1. Cerca film per nome (con ratings e director)
-2. Cerca film per regista
-3. Cerca film per genere
-4. Ordina per popolarità
-5. Ordina per ratings
-6. Cerca films per attore
-7. Filtra per adult
-8. Filtra per lunghezza
+- [x] Cerca film per nome (con ratings e director)
+- [x] Cerca film per regista
+- [ ] Cerca film per genere
+- [ ] Ordina per popolarità
+- [ ] Ordina per ratings
+- [ ] Cerca films per attore
+- [ ] Filtra per adult
+- [ ] Filtra per lunghezza
 
 # TODO
-1. Implementare le query native CESCO
-2. Implementarle usando l'orm PIETRO
-3. Front-end GAB
+- [ ] Implementare le query native CESCO
+- [ ] Implementarle usando l'orm PIETRO
+- [ ] Front-end GAB
