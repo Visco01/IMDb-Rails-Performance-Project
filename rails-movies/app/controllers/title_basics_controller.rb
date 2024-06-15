@@ -3,25 +3,33 @@ class TitleBasicsController < ApplicationController
 
   # GET /title_basics or /title_basics.json
   def index
-    page = params[:page] || 1
-    title = params[:title]
-    genre = params[:genre]
-    max_runtime = params[:max_runtime]
-    adult = params[:adult]
+    profile = RubyProf.profile do
 
-    scope = TitleBasic.select(:id, :primary_title, :title_type, :start_year, :is_adult, :runtime_minutes)
+      page = params[:page] || 1
+      title = params[:title]
+      genre = params[:genre]
+      max_runtime = params[:max_runtime]
+      adult = params[:adult]
 
-    scope = scope.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
+      scope = TitleBasic.select(:id, :primary_title, :title_type, :start_year, :is_adult, :runtime_minutes)
 
-    scope = scope.where('primary_title LIKE ?', "%#{title}%") if title.present?
+      scope = scope.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
 
-    scope = scope.where('runtime_minutes <= ?', max_runtime) if max_runtime.present?
+      scope = scope.where('primary_title LIKE ?', "%#{title}%") if title.present?
 
-    scope = scope.where(is_adult: adult) if adult.present?
+      scope = scope.where('runtime_minutes <= ?', max_runtime) if max_runtime.present?
 
-    @title_basics = scope.paginate(page:, per_page: 15)
+      scope = scope.where(is_adult: adult) if adult.present?
 
-    render json: @title_basics, each_serializer: TitleBasicSerializer
+      @title_basics = scope.paginate(page:, per_page: 15)
+
+      render json: @title_basics, each_serializer: TitleBasicSerializer
+    end
+
+    printer = RubyProf::GraphHtmlPrinter.new(profile)
+    File.open("ruby-prof-reports/title_basics_profile.html", "w") do |file|
+      printer.print(file)
+    end
   end
 
   # GET /title_basics/1 or /title_basics/1.json
