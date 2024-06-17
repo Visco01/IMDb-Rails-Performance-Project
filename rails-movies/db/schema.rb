@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_06_09_134441) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_02_082002) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -25,11 +25,6 @@ ActiveRecord::Schema[7.1].define(version: 2024_06_09_134441) do
     t.bigint "attr_id", null: false
     t.index ["attr_id", "title_aka_id"], name: "index_attrs_title_akas_on_attr_id_and_title_aka_id"
     t.index ["title_aka_id", "attr_id"], name: "index_attrs_title_akas_on_title_aka_id_and_attr_id"
-  end
-
-  create_table "director_with_ratings", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
   end
 
   create_table "directors", id: false, force: :cascade do |t|
