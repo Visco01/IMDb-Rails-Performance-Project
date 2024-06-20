@@ -6,8 +6,7 @@ services:
         env_file: .env
         volumes:
             - postgres-data:/var/lib/postgresql/data
-        # command:
-        #   - "postgres -c 'max_connections=500'"
+        command: ["postgres", "-N", "500"]
         environment:
             - POSTGRES_DB=${POSTGRES_DB}
             - POSTGRES_USER=${POSTGRES_USER}
