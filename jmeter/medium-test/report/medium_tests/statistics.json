@@ -1,0 +1,34 @@
+{
+  "Directors by name" : {
+    "transaction" : "Directors by name",
+    "sampleCount" : 16120,
+    "errorCount" : 1064,
+    "errorPct" : 6.6004963,
+    "meanResTime" : 13877.201116625256,
+    "medianResTime" : 8571.0,
+    "minResTime" : 0.0,
+    "maxResTime" : 69568.0,
+    "pct1ResTime" : 36879.9,
+    "pct2ResTime" : 37775.85,
+    "pct3ResTime" : 40372.0,
+    "throughput" : 5.268631574268422,
+    "receivedKBytesPerSec" : 104.58912374845488,
+    "sentKBytesPerSec" : 0.8198908276703171
+  },
+  "Total" : {
+    "transaction" : "Total",
+    "sampleCount" : 16120,
+    "errorCount" : 1064,
+    "errorPct" : 6.6004963,
+    "meanResTime" : 13877.201116625256,
+    "medianResTime" : 8571.0,
+    "minResTime" : 0.0,
+    "maxResTime" : 69568.0,
+    "pct1ResTime" : 36879.9,
+    "pct2ResTime" : 37775.85,
+    "pct3ResTime" : 40372.0,
+    "throughput" : 5.268631574268422,
+    "receivedKBytesPerSec" : 104.58912374845488,
+    "sentKBytesPerSec" : 0.8198908276703171
+  }
+}

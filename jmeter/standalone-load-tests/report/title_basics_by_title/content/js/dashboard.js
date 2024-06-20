@@ -133,7 +133,7 @@ $(document).ready(function() {
         widgets: ['zebra']
     });
 
-    var data = {"OkPercent": 99.33199732798931, "KoPercent": 0.6680026720106881};
+    var data = {"OkPercent": 99.41052631578947, "KoPercent": 0.5894736842105263};
     var dataset = [
         {
             "label" : "FAIL",
@@ -173,7 +173,7 @@ $(document).ready(function() {
     });
 
     // Creates APDEX table
-    createTable($("#apdexTable"), {"supportsControllersDiscrimination": true, "overall": {"data": [0.34061456245824984, 500, 1500, "Total"], "isController": false}, "titles": ["Apdex", "T (Toleration threshold)", "F (Frustration threshold)", "Label"], "items": [{"data": [0.34061456245824984, 500, 1500, "TitleBasics by primary_title"], "isController": false}]}, function(index, item){
+    createTable($("#apdexTable"), {"supportsControllersDiscrimination": true, "overall": {"data": [0.14947368421052631, 500, 1500, "Total"], "isController": false}, "titles": ["Apdex", "T (Toleration threshold)", "F (Frustration threshold)", "Label"], "items": [{"data": [0.14947368421052631, 500, 1500, "TitleBasics by primary_title"], "isController": false}]}, function(index, item){
         switch(index){
             case 0:
                 item = item.toFixed(3);
@@ -187,7 +187,7 @@ $(document).ready(function() {
     }, [[0, 0]], 3);
 
     // Create statistics table
-    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 7485, 50, 0.6680026720106881, 2449.0120240481046, 0, 8600, 1663.0, 6290.400000000001, 7006.4, 7705.280000000001, 12.429239682568676, 77.39421556978142, 2.0427851356422773], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["TitleBasics by primary_title", 7485, 50, 0.6680026720106881, 2449.0120240481046, 0, 8600, 1663.0, 6290.400000000001, 7006.4, 7705.280000000001, 12.429239682568676, 77.39421556978142, 2.0427851356422773], "isController": false}]}, function(index, item){
+    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 2375, 14, 0.5894736842105263, 8662.426526315769, 107, 32387, 5501.0, 23014.8, 26629.799999999996, 29230.559999999983, 3.906654801402119, 26.38507907943175, 0.6449562593451295], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["TitleBasics by primary_title", 2375, 14, 0.5894736842105263, 8662.426526315769, 107, 32387, 5501.0, 23014.8, 26629.799999999996, 29230.559999999983, 3.906654801402119, 26.38507907943175, 0.6449562593451295], "isController": false}]}, function(index, item){
         switch(index){
             // Errors pct
             case 3:
@@ -217,7 +217,7 @@ $(document).ready(function() {
     }, [[0, 0]], 0, summaryTableHeader);
 
     // Create error table
-    createTable($("#errorsTable"), {"supportsControllersDiscrimination": false, "titles": ["Type of error", "Number of errors", "% in errors", "% in all samples"], "items": [{"data": ["Non HTTP response code: java.net.URISyntaxException/Non HTTP response message: Malformed escape pair at index 73: http://192.168.196.143:3000/title_basics?title=John%20Wick:%20Don't%20F*#%%20with%20John%20Wick&amp;page=1", 14, 28.0, 0.18704074816299265], "isController": false}, {"data": ["500/Internal Server Error", 36, 72.0, 0.48096192384769537], "isController": false}]}, function(index, item){
+    createTable($("#errorsTable"), {"supportsControllersDiscrimination": false, "titles": ["Type of error", "Number of errors", "% in errors", "% in all samples"], "items": [{"data": ["500/Internal Server Error", 14, 100.0, 0.5894736842105263], "isController": false}]}, function(index, item){
         switch(index){
             case 2:
             case 3:
@@ -228,7 +228,7 @@ $(document).ready(function() {
     }, [[1, 1]]);
 
         // Create top5 errors by sampler
-    createTable($("#top5ErrorsBySamplerTable"), {"supportsControllersDiscrimination": false, "overall": {"data": ["Total", 7485, 50, "500/Internal Server Error", 36, "Non HTTP response code: java.net.URISyntaxException/Non HTTP response message: Malformed escape pair at index 73: http://192.168.196.143:3000/title_basics?title=John%20Wick:%20Don't%20F*#%%20with%20John%20Wick&amp;page=1", 14, "", "", "", "", "", ""], "isController": false}, "titles": ["Sample", "#Samples", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors"], "items": [{"data": ["TitleBasics by primary_title", 7485, 50, "500/Internal Server Error", 36, "Non HTTP response code: java.net.URISyntaxException/Non HTTP response message: Malformed escape pair at index 73: http://192.168.196.143:3000/title_basics?title=John%20Wick:%20Don't%20F*#%%20with%20John%20Wick&amp;page=1", 14, "", "", "", "", "", ""], "isController": false}]}, function(index, item){
+    createTable($("#top5ErrorsBySamplerTable"), {"supportsControllersDiscrimination": false, "overall": {"data": ["Total", 2375, 14, "500/Internal Server Error", 14, "", "", "", "", "", "", "", ""], "isController": false}, "titles": ["Sample", "#Samples", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors"], "items": [{"data": ["TitleBasics by primary_title", 2375, 14, "500/Internal Server Error", 14, "", "", "", "", "", "", "", ""], "isController": false}]}, function(index, item){
         return item;
     }, [[0, 0]], 0);
 
