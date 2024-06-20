@@ -7,3 +7,7 @@ out/
 .vscode/
 jmeter.log
 jmeter/temp
+
+.venv
+*.png
+*.svg
