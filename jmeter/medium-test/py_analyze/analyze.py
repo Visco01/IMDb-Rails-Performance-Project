@@ -22,7 +22,7 @@ def main() -> None:
 
     # number_of_users = ['5', '10', '20', '50', '100']
     number_of_users: dict[str, str] = {
-        'A': '5', 'B': '10', 'C': '20', 'D': '50', 'E': '100'
+        'A': '5', 'B': '10', 'C': '20', 'D': '80', 'E': '100', 'F': '200', 'G': '400'
     }
 
     name = 'threadName'
