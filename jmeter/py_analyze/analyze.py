@@ -16,7 +16,9 @@ def pad_data(names, failure_names, failure_counts):
 
 def main() -> None:
     # Load the CSV file
-    df: pd.DataFrame = pd.read_csv('jmeter/medium-test/results/medium_test.csv')
+    df: pd.DataFrame = pd.read_csv(
+        'jmeter/medium-load-tests/results/medium_load_tests.csv'
+    )
 
     number_of_users: dict[str, str] = {
         'A': '5', 'B': '10', 'C': '20', 'D': '80', 'E': '100', 'F': '200', 'G': '400'
@@ -33,10 +35,12 @@ def main() -> None:
     selected_columns = df[[name, latency, success]]
 
     # Group by 'threadName' and compute the average of the 'Latency' column for each group
-    average_latency_by_name = selected_columns.groupby(name)[latency].mean().reset_index()
+    average_latency_by_name = selected_columns.groupby(
+        name)[latency].mean().reset_index()
 
     # Count the number of failures for each thread
-    failure_counts = selected_columns[selected_columns[success] == False].groupby(name)[success].count().reset_index()
+    failure_counts = selected_columns[selected_columns[success] == False].groupby(
+        name)[success].count().reset_index()
     failure_counts.rename(columns={success: 'failure_count'}, inplace=True)
 
     # Print the average latency and failure counts for each thread
