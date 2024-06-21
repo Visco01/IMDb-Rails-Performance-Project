@@ -5,6 +5,12 @@ module CacheKeys
     "actors/#{name}/page/#{page}"
   end
 
+  def self.director_cache_key(params)
+    name = params[:name]
+    page = params[:page] || 1
+    "directors/#{name}/page/#{page}"
+  end
+
   def self.title_cache_key(params)
     title = params[:title]
     genre = params[:genre]
