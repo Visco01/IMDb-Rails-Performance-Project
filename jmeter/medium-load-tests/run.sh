@@ -1,5 +1,5 @@
 #!/usr/bin/env sh
 rm -rf ./results/*
-jmeter -n -t "./MediumTest.jmx" -l "./results/medium_test.csv"
+jmeter -n -t "./MediumTest.jmx" -l "./results/medium_load_tests.csv"
 rm -rf ./report/*
-jmeter -g "./results/medium_test.csv" -o "./report/medium_tests"
+jmeter -g "./results/medium_load_tests.csv" -o "./report/medium_tests"
