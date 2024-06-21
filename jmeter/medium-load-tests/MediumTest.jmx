@@ -50,12 +50,12 @@
           </elementProp>
           <elementProp name="dir_by_name_results" elementType="Argument">
             <stringProp name="Argument.name">dir_by_name_results</stringProp>
-            <stringProp name="Argument.value">results/medium_test.csv</stringProp>
+            <stringProp name="Argument.value">results/medium_load_tests.csv</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="test_path" elementType="Argument">
             <stringProp name="Argument.name">test_path</stringProp>
-            <stringProp name="Argument.value">/home/force/Documents/GitHub/Performance-Project/jmeter/medium-test/</stringProp>
+            <stringProp name="Argument.value">/home/force/Documents/GitHub/Performance-Project/jmeter/medium-load-tests/</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="users_a" elementType="Argument">
@@ -127,7 +127,7 @@
         <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
       </CookieManager>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name A">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name A" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${users_a}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -595,7 +595,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name C">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name C" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${users_c}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -829,7 +829,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name D">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name D" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${users_d}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -1063,7 +1063,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name E">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name E" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${users_e}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -1297,7 +1297,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name F">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name F" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${users_f}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -1531,7 +1531,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name G">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name G" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${users_g}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
