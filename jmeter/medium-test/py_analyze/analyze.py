@@ -16,11 +16,8 @@ def pad_data(names, failure_names, failure_counts):
 
 def main() -> None:
     # Load the CSV file
-    df: pd.DataFrame = pd.read_csv(
-        'jmeter/medium-test/results/medium_test.csv'
-    )
+    df: pd.DataFrame = pd.read_csv('jmeter/medium-test/results/medium_test.csv')
 
-    # number_of_users = ['5', '10', '20', '50', '100']
     number_of_users: dict[str, str] = {
         'A': '5', 'B': '10', 'C': '20', 'D': '80', 'E': '100', 'F': '200', 'G': '400'
     }
@@ -36,73 +33,60 @@ def main() -> None:
     selected_columns = df[[name, latency, success]]
 
     # Group by 'threadName' and compute the average of the 'Latency' column for each group
-    average_latency_by_name = selected_columns.groupby(
-        name)[latency].mean().reset_index()
+    average_latency_by_name = selected_columns.groupby(name)[latency].mean().reset_index()
 
     # Count the number of failures for each thread
-    failure_counts = selected_columns[selected_columns[success] == False].groupby(
-        name)[success].count().reset_index()
+    failure_counts = selected_columns[selected_columns[success] == False].groupby(name)[success].count().reset_index()
     failure_counts.rename(columns={success: 'failure_count'}, inplace=True)
 
     # Print the average latency and failure counts for each thread
     print(average_latency_by_name)
     print(failure_counts)
 
-    # Plot the results in a line graph for average latency
-    plt.figure(figsize=(10, 6))
-    plt.plot(
-        list(number_of_users.values()),
-        average_latency_by_name[latency],
-        marker='o',
-        label='Average Latency'
+    # Prepare data for plotting
+    users = [int(number_of_users[key]) for key in number_of_users.keys()]
+    latencies = average_latency_by_name[latency].tolist()
+    failure_counts_list = pad_data(
+        list(number_of_users.keys()),
+        list(failure_counts[name]),
+        list(failure_counts['failure_count'])
     )
 
+    # Plot the results in a scatter plot for average latency
+    plt.figure(figsize=(10, 6))
+    plt.scatter(users, latencies, marker='o', label='Average Latency')
+    plt.plot(users, latencies)  # Connect the dots with a line
+
     # Add title and labels
-    plt.title('Average Latency by number of users')
-    plt.xlabel('Number of users')
-    plt.ylabel('Average Latency in ms')
+    plt.title('Average Latency by Number of Users')
+    plt.xlabel('Number of Users')
+    plt.ylabel('Average Latency (ms)')
 
     # Show grid
     plt.grid(True)
     plt.legend()
 
-    # Show the plot
+    # Save the plot as SVG file
     plt.tight_layout()  # Adjust layout to make room for x-axis labels
-    plt.savefig(
-        'jmeter/medium-test/py_analyze/average_latency_by_number_of_users.svg')
+    plt.savefig('jmeter/medium-test/py_analyze/average_latency_by_number_of_users.svg')
 
     # Plot the results in a bar graph for failure counts
     plt.figure(figsize=(10, 6))
-
-    list_failure = pad_data(
-        list(number_of_users.keys()),
-        list(
-            failure_counts[name]
-        ),
-        list(failure_counts['failure_count'])
-    )
-
-    plt.bar(
-        list(number_of_users.values()),
-        # failure_counts['failure_count'],
-        list_failure,
-        color='red',
-        label='Failure Count'
-    )
+    plt.bar(users, failure_counts_list, color='red', label='Failure Count')
 
     # Add title and labels
-    plt.title('Failure Count by number of users')
-    plt.xlabel('Number of users')
+    plt.title('Failure Count by Number of Users')
+    plt.xlabel('Number of Users')
     plt.ylabel('Failure Count')
 
     # Show grid
     plt.grid(True)
     plt.legend()
 
-    # Show the plot
+    # Save the plot as SVG file
     plt.tight_layout()  # Adjust layout to make room for x-axis labels
-    plt.savefig(
-        'jmeter/medium-test/py_analyze/failure_count_by_number_of_users.svg')
+    plt.savefig('jmeter/medium-test/py_analyze/failure_count_by_number_of_users.svg')
+
     plt.show()
 
 
