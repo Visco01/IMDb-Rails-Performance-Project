@@ -62,9 +62,9 @@ def main() -> None:
     plt.plot(users, latencies)  # Connect the dots with a line
 
     # Add title and labels
-    plt.title('Average Latency by Number of Users')
+    plt.title('Average Response Time by Number of Users')
     plt.xlabel('Number of Users')
-    plt.ylabel('Average Latency (ms)')
+    plt.ylabel('Average Response Time (ms)')
 
     # Show grid
     plt.grid(True)
@@ -72,7 +72,7 @@ def main() -> None:
 
     # Save the plot as SVG file
     plt.tight_layout()  # Adjust layout to make room for x-axis labels
-    plt.savefig('jmeter/py_analyze/average_latency_by_number_of_users.svg')
+    plt.savefig('jmeter/py_analyze/average_response_time_by_number_of_users.svg')
 
     # Plot the results in a bar graph for failure counts
     plt.figure(figsize=(10, 6))
