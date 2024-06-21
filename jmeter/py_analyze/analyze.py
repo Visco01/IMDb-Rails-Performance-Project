@@ -68,7 +68,7 @@ def main() -> None:
 
     # Save the plot as SVG file
     plt.tight_layout()  # Adjust layout to make room for x-axis labels
-    plt.savefig('jmeter/medium-test/py_analyze/average_latency_by_number_of_users.svg')
+    plt.savefig('jmeter/py_analyze/average_latency_by_number_of_users.svg')
 
     # Plot the results in a bar graph for failure counts
     plt.figure(figsize=(10, 6))
@@ -85,7 +85,7 @@ def main() -> None:
 
     # Save the plot as SVG file
     plt.tight_layout()  # Adjust layout to make room for x-axis labels
-    plt.savefig('jmeter/medium-test/py_analyze/failure_count_by_number_of_users.svg')
+    plt.savefig('jmeter/py_analyze/failure_count_by_number_of_users.svg')
 
     plt.show()
 
