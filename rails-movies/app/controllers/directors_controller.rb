@@ -11,9 +11,13 @@ class DirectorsController < ApplicationController
       directors = NameBasic.joins(:professions)
                     .where('professions.name IN (?)', %w[director])
       directors = directors.where('primary_name LIKE ?', "%#{name}%") if name.present?
-      directors.paginate(page: page, per_page: 15)
+      directors = directors.paginate(page: page, per_page: 15)
+      serialized = directors.map do |director|
+        DirectorSerializer.new(director).as_json
+      end
+      serialized
     end
 
-    render json: @directors, each_serializer: DirectorSerializer
+    render json: @directors
   end
 end

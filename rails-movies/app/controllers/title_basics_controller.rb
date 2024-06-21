@@ -18,10 +18,14 @@ class TitleBasicsController < ApplicationController
       scope = scope.where('primary_title LIKE ?', "%#{title}%") if title.present?
       scope = scope.where('runtime_minutes <= ?', max_runtime) if max_runtime.present?
       scope = scope.where(is_adult: adult) if adult.present?
-      scope.paginate(page: page, per_page: 15)
+      titles = scope.paginate(page: page, per_page: 15)
+      serialized = titles.map do |title_basic|
+        TitleBasicSerializer.new(title_basic).as_json
+      end
+      serialized
     end
 
-    render json: @title_basics, each_serializer: TitleBasicSerializer
+    render json: @title_basics
   end
 
   # GET /title_basics/1 or /title_basics/1.json

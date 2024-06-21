@@ -11,9 +11,13 @@ class ActorsController < ApplicationController
       actors = NameBasic.joins(:professions)
                  .where('professions.name IN (?)', %w[actor actress])
       actors = actors.where('primary_name LIKE ?', "%#{name}%") if name.present?
-      actors.paginate(page: page, per_page: 15)
+      actors = actors.paginate(page: page, per_page: 15)
+      serialized = actors.map do |actor|
+        ActorSerializer.new(actor).as_json
+      end
+      serialized
     end
 
-    render json: @actors, each_serializer: ActorSerializer
+    render json: @actors
   end
 end
