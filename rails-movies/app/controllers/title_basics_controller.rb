@@ -1,4 +1,5 @@
 class TitleBasicsController < ApplicationController
+  require_relative '../../lib/cache/cache_keys'
   before_action :set_title_basic, only: %i[ show edit update destroy ]
 
   # GET /title_basics or /title_basics.json
@@ -9,17 +10,16 @@ class TitleBasicsController < ApplicationController
     max_runtime = params[:max_runtime]
     adult = params[:adult]
 
-    scope = TitleBasic.select(:id, :primary_title, :title_type, :start_year, :is_adult, :runtime_minutes)
+    cache_key = CacheKeys.title_cache_key(params)
 
-    scope = scope.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
-
-    scope = scope.where('primary_title LIKE ?', "%#{title}%") if title.present?
-
-    scope = scope.where('runtime_minutes <= ?', max_runtime) if max_runtime.present?
-
-    scope = scope.where(is_adult: adult) if adult.present?
-
-    @title_basics = scope.paginate(page:, per_page: 15)
+    @title_basics = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+      scope = TitleBasic.select(:id, :primary_title, :title_type, :start_year, :is_adult, :runtime_minutes)
+      scope = scope.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
+      scope = scope.where('primary_title LIKE ?', "%#{title}%") if title.present?
+      scope = scope.where('runtime_minutes <= ?', max_runtime) if max_runtime.present?
+      scope = scope.where(is_adult: adult) if adult.present?
+      scope.paginate(page: page, per_page: 15)
+    end
 
     render json: @title_basics, each_serializer: TitleBasicSerializer
   end
