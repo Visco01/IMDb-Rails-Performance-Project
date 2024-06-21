@@ -23,13 +23,13 @@
           </elementProp>
           <elementProp name="users" elementType="Argument">
             <stringProp name="Argument.name">users</stringProp>
-            <stringProp name="Argument.value">60</stringProp>
+            <stringProp name="Argument.value">15</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">quantity</stringProp>
           </elementProp>
           <elementProp name="ramp_up" elementType="Argument">
             <stringProp name="Argument.name">ramp_up</stringProp>
-            <stringProp name="Argument.value">500</stringProp>
+            <stringProp name="Argument.value">10</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">in seconds</stringProp>
           </elementProp>
@@ -37,6 +37,16 @@
             <stringProp name="Argument.name">duration</stringProp>
             <stringProp name="Argument.value">600</stringProp>
             <stringProp name="Argument.desc">in seconds</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="lambda" elementType="Argument">
+            <stringProp name="Argument.name">lambda</stringProp>
+            <stringProp name="Argument.value">100</stringProp>
+            <stringProp name="Argument.metadata">=</stringProp>
+          </elementProp>
+          <elementProp name="thinking_time" elementType="Argument">
+            <stringProp name="Argument.name">thinking_time</stringProp>
+            <stringProp name="Argument.value">1100</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
           </elementProp>
           <elementProp name="tb_by_primary_title_csv" elementType="Argument">
@@ -111,7 +121,7 @@
         <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
       </CookieManager>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="TitleBasics by primary_title" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="TitleBasics by primary_title">
         <stringProp name="ThreadGroup.num_threads">${users}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -124,6 +134,11 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
+        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer">
+          <stringProp name="ConstantTimer.delay">${thinking_time}</stringProp>
+          <stringProp name="RandomTimer.range">${lambda}</stringProp>
+        </PoissonRandomTimer>
+        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="TitleBasics by primary_title" enabled="true">
           <stringProp name="HTTPSampler.path">/title_basics?title=${title}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -141,11 +156,6 @@
             </collectionProp>
           </elementProp>
         </HTTPSamplerProxy>
-        <hashTree/>
-        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
-          <stringProp name="ConstantTimer.delay">300</stringProp>
-          <stringProp name="RandomTimer.range">100</stringProp>
-        </PoissonRandomTimer>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set TitleBasics titles" enabled="true">
           <stringProp name="delimiter">,</stringProp>
@@ -345,7 +355,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="TitleBasics by params" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="TitleBasics by params">
         <stringProp name="ThreadGroup.num_threads">${users}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -358,6 +368,11 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
+        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer">
+          <stringProp name="ConstantTimer.delay">${thinking_time}</stringProp>
+          <stringProp name="RandomTimer.range">${lambda}</stringProp>
+        </PoissonRandomTimer>
+        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="TitleBasics by params" enabled="true">
           <stringProp name="HTTPSampler.path">/title_basics?genre=${genre}&amp;adult=${adult}&amp;max_runtime=${max_runtime}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -375,11 +390,6 @@
             </collectionProp>
           </elementProp>
         </HTTPSamplerProxy>
-        <hashTree/>
-        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
-          <stringProp name="ConstantTimer.delay">300</stringProp>
-          <stringProp name="RandomTimer.range">100</stringProp>
-        </PoissonRandomTimer>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set TitleBasics params" enabled="true">
           <stringProp name="delimiter">,</stringProp>
@@ -579,7 +589,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name">
         <stringProp name="ThreadGroup.num_threads">${users}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -592,6 +602,11 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
+        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer">
+          <stringProp name="ConstantTimer.delay">${thinking_time}</stringProp>
+          <stringProp name="RandomTimer.range">${lambda}</stringProp>
+        </PoissonRandomTimer>
+        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Directors by name" enabled="true">
           <stringProp name="HTTPSampler.path">/directors?name=${name}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -609,11 +624,6 @@
             </collectionProp>
           </elementProp>
         </HTTPSamplerProxy>
-        <hashTree/>
-        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
-          <stringProp name="ConstantTimer.delay">300</stringProp>
-          <stringProp name="RandomTimer.range">100</stringProp>
-        </PoissonRandomTimer>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Directors params" enabled="true">
           <stringProp name="delimiter">,</stringProp>
@@ -738,7 +748,7 @@
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table" enabled="true">
+        <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -813,7 +823,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Actors by name" enabled="true">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Actors by name">
         <stringProp name="ThreadGroup.num_threads">${users}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -826,6 +836,11 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
+        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer">
+          <stringProp name="ConstantTimer.delay">${thinking_time}</stringProp>
+          <stringProp name="RandomTimer.range">${lambda}</stringProp>
+        </PoissonRandomTimer>
+        <hashTree/>
         <HTTPSamplerProxy guiclass="HttpTestSampleGui" testclass="HTTPSamplerProxy" testname="Actors by name" enabled="true">
           <stringProp name="HTTPSampler.path">/actors?name=${name}</stringProp>
           <boolProp name="HTTPSampler.follow_redirects">true</boolProp>
@@ -843,11 +858,6 @@
             </collectionProp>
           </elementProp>
         </HTTPSamplerProxy>
-        <hashTree/>
-        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
-          <stringProp name="ConstantTimer.delay">300</stringProp>
-          <stringProp name="RandomTimer.range">100</stringProp>
-        </PoissonRandomTimer>
         <hashTree/>
         <CSVDataSet guiclass="TestBeanGUI" testclass="CSVDataSet" testname="CSV Data Set Directors params" enabled="true">
           <stringProp name="delimiter">,</stringProp>
