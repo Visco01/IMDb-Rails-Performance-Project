@@ -58,7 +58,7 @@ def main() -> None:
 
     # Plot the results in a scatter plot for average latency
     plt.figure(figsize=(10, 6))
-    plt.scatter(users, latencies, marker='o', label='Average Latency')
+    plt.scatter(users, latencies, marker='o', label='Average Response Time')
     plt.plot(users, latencies)  # Connect the dots with a line
 
     # Add title and labels
