@@ -8,5 +8,15 @@ class AddIndexesToFksAndNames < ActiveRecord::Migration[7.1]
     add_index :name_basics, :primary_name unless index_exists?(:name_basics, :primary_name)
     add_index :professions, :name unless index_exists?(:professions, :name)
     add_index :name_basics_professions, [:name_basic_id, :profession_id] unless index_exists?(:name_basics_professions, [:name_basic_id, :profession_id])
+
+    # add GIN indexes
+    # enable_extension 'pg_trgm'
+    # add_index :title_basics, :primary_title, using: :gin unless index_exists?(:title_basics, :primary_title, using: :gin)
+    # add_index :title_basics, :runtime_minutes, using: :gin unless index_exists?(:title_basics, :runtime_minutes, using: :gin)
+    # add_index :title_basics, :is_adult, using: :gin unless index_exists?(:title_basics, :is_adult, using: :gin)
+    # add_index :genres, :name, using: :gin unless index_exists?(:genres, :name, using: :gin)
+    # add_index :name_basics, :primary_name, using: :gin unless index_exists?(:name_basics, :primary_name, using: :gin)
+    # add_index :professions, :name, using: :gin unless index_exists?(:professions, :name, using: :gin)
+    # add_index :name_basics_professions, [:name_basic_id, :profession_id], using: :gin unless index_exists?(:name_basics_professions, [:name_basic_id, :profession_id], using: :gin)
   end
 end
