@@ -12,7 +12,7 @@ class TitleBasicsController < ApplicationController
 
     cache_key = CacheKeys.title_cache_key(params)
 
-    @title_basics = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+    @title_basics = Rails.cache.fetch(cache_key, expires_in: 15.minutes) do
       scope = TitleBasic.select(:id, :primary_title, :title_type, :start_year, :is_adult, :runtime_minutes)
       scope = scope.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
       scope = scope.where('primary_title = ?', title.to_s) if title.present?

@@ -7,7 +7,7 @@ class ActorsController < ApplicationController
 
     cache_key = CacheKeys.actor_cache_key(params)
 
-    @actors = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
+    @actors = Rails.cache.fetch(cache_key, expires_in: 15.minutes) do
       actors = NameBasic.joins(:professions)
                  .where('professions.name IN (?)', %w[actor actress])
       actors = actors.where('primary_name = ?', name.to_s) if name.present?
