@@ -10,7 +10,7 @@ class ActorsController < ApplicationController
     @actors = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
       actors = NameBasic.joins(:professions)
                  .where('professions.name IN (?)', %w[actor actress])
-      actors = actors.where('primary_name LIKE ?', "%#{name}%") if name.present?
+      actors = actors.where('primary_name = ?', name.to_s) if name.present?
       actors = actors.paginate(page: page, per_page: 15)
       serialized = actors.map do |actor|
         ActorSerializer.new(actor).as_json

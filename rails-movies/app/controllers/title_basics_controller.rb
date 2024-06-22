@@ -15,7 +15,7 @@ class TitleBasicsController < ApplicationController
     @title_basics = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
       scope = TitleBasic.select(:id, :primary_title, :title_type, :start_year, :is_adult, :runtime_minutes)
       scope = scope.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
-      scope = scope.where('primary_title LIKE ?', "%#{title}%") if title.present?
+      scope = scope.where('primary_title = ?', title.to_s) if title.present?
       scope = scope.where('runtime_minutes <= ?', max_runtime) if max_runtime.present?
       scope = scope.where(is_adult: adult) if adult.present?
       titles = scope.paginate(page: page, per_page: 15)

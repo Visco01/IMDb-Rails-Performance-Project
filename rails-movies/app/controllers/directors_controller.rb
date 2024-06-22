@@ -10,7 +10,7 @@ class DirectorsController < ApplicationController
     @directors = Rails.cache.fetch(cache_key, expires_in: 1.hour) do
       directors = NameBasic.joins(:professions)
                     .where('professions.name IN (?)', %w[director])
-      directors = directors.where('primary_name LIKE ?', "%#{name}%") if name.present?
+      directors = directors.where('primary_name = ?', name.to_s) if name.present?
       directors = directors.paginate(page: page, per_page: 15)
       serialized = directors.map do |director|
         DirectorSerializer.new(director).as_json
