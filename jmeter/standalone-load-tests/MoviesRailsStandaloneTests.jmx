@@ -23,7 +23,7 @@
           </elementProp>
           <elementProp name="users" elementType="Argument">
             <stringProp name="Argument.name">users</stringProp>
-            <stringProp name="Argument.value">15</stringProp>
+            <stringProp name="Argument.value">100</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">quantity</stringProp>
           </elementProp>
@@ -121,7 +121,7 @@
         <boolProp name="CookieManager.controlledByThreadGroup">false</boolProp>
       </CookieManager>
       <hashTree/>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="TitleBasics by primary_title">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="TitleBasics by primary_title" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${users}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -134,7 +134,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer">
+        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
           <stringProp name="ConstantTimer.delay">${thinking_time}</stringProp>
           <stringProp name="RandomTimer.range">${lambda}</stringProp>
         </PoissonRandomTimer>
@@ -355,7 +355,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="TitleBasics by params">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="TitleBasics by params" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${users}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -368,7 +368,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer">
+        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
           <stringProp name="ConstantTimer.delay">${thinking_time}</stringProp>
           <stringProp name="RandomTimer.range">${lambda}</stringProp>
         </PoissonRandomTimer>
@@ -589,7 +589,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Directors by name" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${users}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -602,7 +602,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer">
+        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
           <stringProp name="ConstantTimer.delay">${thinking_time}</stringProp>
           <stringProp name="RandomTimer.range">${lambda}</stringProp>
         </PoissonRandomTimer>
@@ -748,7 +748,7 @@
           <stringProp name="filename"></stringProp>
         </ResultCollector>
         <hashTree/>
-        <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table">
+        <ResultCollector guiclass="TableVisualizer" testclass="ResultCollector" testname="View Results in Table" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
             <name>saveConfig</name>
@@ -823,7 +823,7 @@
         </ResultCollector>
         <hashTree/>
       </hashTree>
-      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Actors by name">
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Actors by name" enabled="true">
         <stringProp name="ThreadGroup.num_threads">${users}</stringProp>
         <stringProp name="ThreadGroup.ramp_time">${ramp_up}</stringProp>
         <stringProp name="ThreadGroup.duration">${duration}</stringProp>
@@ -836,7 +836,7 @@
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer">
+        <PoissonRandomTimer guiclass="PoissonRandomTimerGui" testclass="PoissonRandomTimer" testname="Poisson Random Timer" enabled="true">
           <stringProp name="ConstantTimer.delay">${thinking_time}</stringProp>
           <stringProp name="RandomTimer.range">${lambda}</stringProp>
         </PoissonRandomTimer>
