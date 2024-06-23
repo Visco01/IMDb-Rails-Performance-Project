@@ -14,14 +14,28 @@ class TitleBasicsController < ApplicationController
     max_runtime = params[:max_runtime]
     adult = params[:adult]
 
+    # Convert special string to `\N`
+    genre = '\N' if genre == 'NULL_GENRE'
+
     cache_key = CacheKeys.title_cache_key(params)
 
     @title_basics = Rails.cache.fetch(cache_key, expires_in: 15.minutes) do
       scope = TitleBasic.select(:id, :primary_title, :title_type, :start_year, :is_adult, :runtime_minutes)
-      scope = scope.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
+
+      if genre.present?
+        if genre == '\N'
+          scope = scope.joins("LEFT JOIN title_basic_genres ON title_basics.id = title_basic_genres.title_basic_id")
+                       .joins("LEFT JOIN genres ON title_basic_genres.genre_id = genres.id")
+                       .where('genres.name IS NULL OR genres.name = ?', genre)
+        else
+          scope = scope.joins(:genres).where('genres.name IN (?)', genre)
+        end
+      end
+
       scope = scope.where('primary_title = ?', title.to_s) if title.present?
       scope = scope.where('runtime_minutes <= ?', max_runtime) if max_runtime.present?
       scope = scope.where(is_adult: adult) if adult.present?
+
       titles = scope.paginate(page: page, per_page: 15)
       serialized = titles.map do |title_basic|
         sanitize_and_serialize(title_basic)
