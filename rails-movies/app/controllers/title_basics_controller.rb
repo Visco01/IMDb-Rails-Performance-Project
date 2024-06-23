@@ -2,6 +2,10 @@ class TitleBasicsController < ApplicationController
   require_relative '../../lib/cache/cache_keys'
   before_action :set_title_basic, only: %i[ show edit update destroy ]
 
+  # Rescue from ActiveRecord::RecordNotFound and StandardError
+  rescue_from ActiveRecord::RecordNotFound, with: :handle_record_not_found
+  rescue_from StandardError, with: :handle_standard_error
+
   # GET /title_basics or /title_basics.json
   def index
     page = params[:page] || 1
@@ -26,6 +30,8 @@ class TitleBasicsController < ApplicationController
     end
 
     render json: @title_basics
+  rescue => e
+    render json: { error: "Sorry, we cannot find what you have searched." }, status: :unprocessable_entity
   end
 
   # GET /title_basics/1 or /title_basics/1.json
@@ -80,6 +86,7 @@ class TitleBasicsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_title_basic
     @title_basic = TitleBasic.find(params[:id])
@@ -88,5 +95,15 @@ class TitleBasicsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def title_basic_params
     params.require(:title_basic).permit(:tconst, :title_type, :primary_title, :original_title, :is_adult, :start_year, :end_year, :runtime_minutes)
+  end
+
+  # Handle ActiveRecord::RecordNotFound exceptions
+  def handle_record_not_found
+    render json: { error: "Sorry, we cannot find what you have searched." }, status: :not_found
+  end
+
+  # Handle all other exceptions
+  def handle_standard_error
+    render json: { error: "Sorry, we cannot find what you have searched." }, status: :unprocessable_entity
   end
 end
