@@ -17,11 +17,11 @@ def pad_data(names, failure_names, failure_counts):
 def main() -> None:
     # Load the CSV file
     df: pd.DataFrame = pd.read_csv(
-        'jmeter/medium-load-tests/results/dontupload.csv'
+        '/home/force/Documents/GitHub/Performance-Project/jmeter/medium-load-tests/results/medium_load_tests.csv'
     )
 
     number_of_users: dict[str, str] = {
-        'A': '5', 'B': '10', 'C': '20', 'D': '80', 'E': '100', 'F': '200', 'G': '400'
+        'A': '400', 'B': '600', 'C': '800', 'D': '1000', 'E': '1200',  # 'F': '200', 'G': '400'
     }
 
     name = 'threadName'
@@ -58,8 +58,8 @@ def main() -> None:
 
     # Plot the results in a scatter plot for average latency
     plt.figure(figsize=(10, 6))
-    plt.scatter(users, latencies, marker='o', label='Average Response Time')
-    plt.plot(users, latencies)  # Connect the dots with a line
+    plt.scatter(users[:4], latencies[:4], marker='o', label='Average Response Time')
+    plt.plot(users[:4], latencies[:4])  # Connect the dots with a line
 
     # Add title and labels
     plt.title('Average Response Time by Number of Users')
