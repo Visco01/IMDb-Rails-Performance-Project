@@ -1,5 +1,5 @@
 class TitleBasicsController < ApplicationController
-  before_action :set_title_basic, only: %i[ show edit update destroy ]
+  before_action :set_title_basic, only: %i[show edit update destroy]
 
   # GET /title_basics or /title_basics.json
   def index
@@ -7,13 +7,24 @@ class TitleBasicsController < ApplicationController
     title = params[:title]
     genre = params[:genre]
 
+    # Convert special string to `\N`
+    genre = '\N' if genre == 'NULL_GENRE'
+
     scope = TitleBasic.select(:id, :primary_title, :title_type, :start_year, :is_adult, :runtime_minutes)
 
-    scope = scope.joins(:genres).where('genres.name IN (?)', genre) if genre.present?
+    if genre.present?
+      if genre == '\N'
+        scope = scope.joins("LEFT JOIN title_basic_genres ON title_basics.id = title_basic_genres.title_basic_id")
+                     .joins("LEFT JOIN genres ON title_basic_genres.genre_id = genres.id")
+                     .where('genres.name IS NULL OR genres.name = ?', genre)
+      else
+        scope = scope.joins(:genres).where('genres.name IN (?)', genre)
+      end
+    end
 
     scope = scope.where('primary_title LIKE ?', "%#{title}%") if title.present?
 
-    @title_basics = scope.paginate(page:, per_page: 15)
+    @title_basics = scope.paginate(page: page, per_page: 15)
 
     render json: @title_basics, each_serializer: TitleBasicSerializer
   end
@@ -70,6 +81,7 @@ class TitleBasicsController < ApplicationController
   end
 
   private
+
   # Use callbacks to share common setup or constraints between actions.
   def set_title_basic
     @title_basic = TitleBasic.find(params[:id])
