@@ -45,7 +45,7 @@ class TitleBasicsController < ApplicationController
 
     render json: @title_basics
   rescue => e
-    render json: { error: "Sorry, we cannot find what you have searched." }, status: :unprocessable_entity
+    render json: { error: "Sorry, we cannot find what you have searched." }, status: :ok
   end
 
   # GET /title_basics/1 or /title_basics/1.json
@@ -70,8 +70,8 @@ class TitleBasicsController < ApplicationController
         format.html { redirect_to title_basic_url(@title_basic), notice: "Title basic was successfully created." }
         format.json { render :show, status: :created, location: @title_basic }
       else
-        format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @title_basic.errors, status: :unprocessable_entity }
+        format.html { render :new, status: :ok }
+        format.json { render json: @title_basic.errors, status: :ok }
       end
     end
   end
@@ -83,8 +83,8 @@ class TitleBasicsController < ApplicationController
         format.html { redirect_to title_basic_url(@title_basic), notice: "Title basic was successfully updated." }
         format.json { render :show, status: :ok, location: @title_basic }
       else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @title_basic.errors, status: :unprocessable_entity }
+        format.html { render :edit, status: :ok }
+        format.json { render json: @title_basic.errors, status: :ok }
       end
     end
   end
@@ -122,11 +122,11 @@ class TitleBasicsController < ApplicationController
 
   # Handle ActiveRecord::RecordNotFound exceptions
   def handle_record_not_found
-    render json: { error: "Sorry, we cannot find what you have searched." }, status: :not_found
+    render json: { error: "Sorry, we cannot find what you have searched." }, status: :ok
   end
 
   # Handle all other exceptions
   def handle_standard_error
-    render json: { error: "Sorry, we cannot find what you have searched." }, status: :unprocessable_entity
+    render json: { error: "Sorry, we cannot find what you have searched." }, status: :ok
   end
 end
