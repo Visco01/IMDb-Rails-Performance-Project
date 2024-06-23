@@ -24,7 +24,7 @@ class TitleBasicsController < ApplicationController
       scope = scope.where(is_adult: adult) if adult.present?
       titles = scope.paginate(page: page, per_page: 15)
       serialized = titles.map do |title_basic|
-        TitleBasicSerializer.new(title_basic).as_json
+        sanitize_and_serialize(title_basic)
       end
       serialized
     end
@@ -95,6 +95,15 @@ class TitleBasicsController < ApplicationController
   # Only allow a list of trusted parameters through.
   def title_basic_params
     params.require(:title_basic).permit(:tconst, :title_type, :primary_title, :original_title, :is_adult, :start_year, :end_year, :runtime_minutes)
+  end
+
+  # Sanitize and encode response data
+  def sanitize_and_serialize(title_basic)
+    serialized_data = TitleBasicSerializer.new(title_basic).as_json
+    serialized_data.each do |key, value|
+      serialized_data[key] = ERB::Util.html_escape(value) if value.is_a?(String)
+    end
+    serialized_data
   end
 
   # Handle ActiveRecord::RecordNotFound exceptions
