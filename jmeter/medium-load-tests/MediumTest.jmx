@@ -60,43 +60,43 @@
           </elementProp>
           <elementProp name="users_a" elementType="Argument">
             <stringProp name="Argument.name">users_a</stringProp>
-            <stringProp name="Argument.value">400</stringProp>
+            <stringProp name="Argument.value">1000</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">quantity</stringProp>
           </elementProp>
           <elementProp name="users_b" elementType="Argument">
             <stringProp name="Argument.name">users_b</stringProp>
-            <stringProp name="Argument.value">600</stringProp>
+            <stringProp name="Argument.value">1500</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">quantity</stringProp>
           </elementProp>
           <elementProp name="users_c" elementType="Argument">
             <stringProp name="Argument.name">users_c</stringProp>
-            <stringProp name="Argument.value">800</stringProp>
+            <stringProp name="Argument.value">2000</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">quantity</stringProp>
           </elementProp>
           <elementProp name="users_d" elementType="Argument">
             <stringProp name="Argument.name">users_d</stringProp>
-            <stringProp name="Argument.value">1000</stringProp>
+            <stringProp name="Argument.value">2500</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">quantity</stringProp>
           </elementProp>
           <elementProp name="users_e" elementType="Argument">
             <stringProp name="Argument.name">users_e</stringProp>
-            <stringProp name="Argument.value">1200</stringProp>
+            <stringProp name="Argument.value">3000</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">quantity</stringProp>
           </elementProp>
           <elementProp name="users_f" elementType="Argument">
             <stringProp name="Argument.name">users_f</stringProp>
-            <stringProp name="Argument.value">1400</stringProp>
+            <stringProp name="Argument.value">3500</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">quantity</stringProp>
           </elementProp>
           <elementProp name="users_g" elementType="Argument">
             <stringProp name="Argument.name">users_g</stringProp>
-            <stringProp name="Argument.value">1600</stringProp>
+            <stringProp name="Argument.value">4500</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">quantity</stringProp>
           </elementProp>

@@ -23,7 +23,7 @@
           </elementProp>
           <elementProp name="users" elementType="Argument">
             <stringProp name="Argument.name">users</stringProp>
-            <stringProp name="Argument.value">200</stringProp>
+            <stringProp name="Argument.value">1000</stringProp>
             <stringProp name="Argument.metadata">=</stringProp>
             <stringProp name="Argument.desc">quantity</stringProp>
           </elementProp>
