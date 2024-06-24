@@ -133,7 +133,7 @@ $(document).ready(function() {
         widgets: ['zebra']
     });
 
-    var data = {"OkPercent": 99.94915553983553, "KoPercent": 0.05084446016447078};
+    var data = {"OkPercent": 100.0, "KoPercent": 0.0};
     var dataset = [
         {
             "label" : "FAIL",
@@ -173,7 +173,7 @@ $(document).ready(function() {
     });
 
     // Creates APDEX table
-    createTable($("#apdexTable"), {"supportsControllersDiscrimination": true, "overall": {"data": [0.9982536033247855, 500, 1500, "Total"], "isController": false}, "titles": ["Apdex", "T (Toleration threshold)", "F (Frustration threshold)", "Label"], "items": [{"data": [1.0, 500, 1500, "Directors by name"], "isController": false}, {"data": [0.9979622574643395, 500, 1500, "TitleBasics by primary_title"], "isController": false}, {"data": [1.0, 500, 1500, "Actors by name"], "isController": false}, {"data": [0.9950777885206996, 500, 1500, "TitleBasics by params"], "isController": false}]}, function(index, item){
+    createTable($("#apdexTable"), {"supportsControllersDiscrimination": true, "overall": {"data": [0.9296981820023295, 500, 1500, "Total"], "isController": false}, "titles": ["Apdex", "T (Toleration threshold)", "F (Frustration threshold)", "Label"], "items": [{"data": [0.9401670231184438, 500, 1500, "Directors by name"], "isController": false}, {"data": [0.928542199488491, 500, 1500, "TitleBasics by primary_title"], "isController": false}, {"data": [0.944338101954463, 500, 1500, "Actors by name"], "isController": false}, {"data": [0.9059554842590736, 500, 1500, "TitleBasics by params"], "isController": false}]}, function(index, item){
         switch(index){
             case 0:
                 item = item.toFixed(3);
@@ -187,7 +187,7 @@ $(document).ready(function() {
     }, [[0, 0]], 3);
 
     // Create statistics table
-    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 45236, 23, 0.05084446016447078, 59.28634273587419, 0, 1478, 49.0, 106.0, 133.0, 253.0, 75.55338057785744, 270.33380293922625, 12.30348475687665], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["Directors by name", 11300, 0, 0.0, 51.337256637167826, 37, 334, 45.0, 70.0, 80.0, 111.0, 18.932508121710896, 22.468172665835368, 2.955709227147374], "isController": false}, {"data": ["TitleBasics by primary_title", 11287, 23, 0.20377425356604945, 57.641091521218925, 0, 370, 48.0, 87.0, 108.0, 144.0, 18.9283600061043, 79.9258106565518, 3.1006912825905038], "isController": false}, {"data": ["Actors by name", 11272, 0, 0.0, 50.88759758694123, 37, 330, 45.0, 70.0, 80.0, 109.0, 18.846031666415875, 21.21676444863821, 2.8868344138202002], "isController": false}, {"data": ["TitleBasics by params", 11377, 0, 0.0, 77.13509712578035, 39, 1478, 51.0, 120.0, 150.0, 399.31999999999607, 19.001919065219827, 147.13935948066654, 3.385049895800103], "isController": false}]}, function(index, item){
+    createTable($("#statisticsTable"), {"supportsControllersDiscrimination": true, "overall": {"data": ["Total", 39494, 0, 0.0, 305.4014027447241, 4, 2971, 290.0, 630.0, 790.0, 1352.0, 65.92672841907057, 234.34608094736913, 10.615553348564166], "isController": false}, "titles": ["Label", "#Samples", "FAIL", "Error %", "Average", "Min", "Max", "Median", "90th pct", "95th pct", "99th pct", "Transactions/s", "Received", "Sent"], "items": [{"data": ["Directors by name", 9819, 0, 0.0, 285.2202871982894, 4, 2725, 263.0, 529.0, 675.0, 1002.7999999999993, 16.40083582628042, 19.164121326452467, 2.5284347862579737], "isController": false}, {"data": ["TitleBasics by primary_title", 9775, 0, 0.0, 301.317340153452, 4, 2898, 269.0, 573.3999999999996, 729.1999999999989, 1133.199999999999, 16.31802026940175, 68.51061208643627, 2.648246644894004], "isController": false}, {"data": ["Actors by name", 9926, 0, 0.0, 284.4363288333672, 4, 2400, 265.0, 517.0, 682.0, 999.7299999999996, 16.570177020105906, 18.358264150945363, 2.506594863366153], "isController": false}, {"data": ["TitleBasics by params", 9974, 0, 0.0, 350.1356526970101, 4, 2971, 286.0, 674.5, 923.25, 1934.25, 16.67608534999047, 128.53440641709108, 2.9387869225274286], "isController": false}]}, function(index, item){
         switch(index){
             // Errors pct
             case 3:
@@ -217,7 +217,7 @@ $(document).ready(function() {
     }, [[0, 0]], 0, summaryTableHeader);
 
     // Create error table
-    createTable($("#errorsTable"), {"supportsControllersDiscrimination": false, "titles": ["Type of error", "Number of errors", "% in errors", "% in all samples"], "items": [{"data": ["Non HTTP response code: java.net.URISyntaxException/Non HTTP response message: Malformed escape pair at index 73: http://192.168.196.143:3000/title_basics?title=John%20Wick:%20Don't%20F*#%%20with%20John%20Wick&amp;page=1", 23, 100.0, 0.05084446016447078], "isController": false}]}, function(index, item){
+    createTable($("#errorsTable"), {"supportsControllersDiscrimination": false, "titles": ["Type of error", "Number of errors", "% in errors", "% in all samples"], "items": []}, function(index, item){
         switch(index){
             case 2:
             case 3:
@@ -228,7 +228,7 @@ $(document).ready(function() {
     }, [[1, 1]]);
 
         // Create top5 errors by sampler
-    createTable($("#top5ErrorsBySamplerTable"), {"supportsControllersDiscrimination": false, "overall": {"data": ["Total", 45236, 23, "Non HTTP response code: java.net.URISyntaxException/Non HTTP response message: Malformed escape pair at index 73: http://192.168.196.143:3000/title_basics?title=John%20Wick:%20Don't%20F*#%%20with%20John%20Wick&amp;page=1", 23, "", "", "", "", "", "", "", ""], "isController": false}, "titles": ["Sample", "#Samples", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors"], "items": [{"data": [], "isController": false}, {"data": ["TitleBasics by primary_title", 11287, 23, "Non HTTP response code: java.net.URISyntaxException/Non HTTP response message: Malformed escape pair at index 73: http://192.168.196.143:3000/title_basics?title=John%20Wick:%20Don't%20F*#%%20with%20John%20Wick&amp;page=1", 23, "", "", "", "", "", "", "", ""], "isController": false}, {"data": [], "isController": false}, {"data": [], "isController": false}]}, function(index, item){
+    createTable($("#top5ErrorsBySamplerTable"), {"supportsControllersDiscrimination": false, "overall": {"data": ["Total", 39494, 0, "", "", "", "", "", "", "", "", "", ""], "isController": false}, "titles": ["Sample", "#Samples", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors", "Error", "#Errors"], "items": [{"data": [], "isController": false}, {"data": [], "isController": false}, {"data": [], "isController": false}, {"data": [], "isController": false}]}, function(index, item){
         return item;
     }, [[0, 0]], 0);
 
