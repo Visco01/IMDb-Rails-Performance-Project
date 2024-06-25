@@ -1,21 +1,23 @@
 class ActorsController < ApplicationController
+  require_relative '../../lib/cache/cache_keys'
+
   def index
-    profile = RubyProf.profile do
-      page = params[:page] || 1
-      name = params[:name]
-      # SWAP queries!!!
-      @actors = NameBasic.joins(:professions)
-                  .where('professions.name IN (?)', %w[actor actress])
-      @actors = @actors.where('primary_name LIKE ?', "%#{name}%") if name.present?
-      @actors = @actors.paginate(page: page, per_page: 15)
+    page = params[:page] || 1
+    name = params[:name]
 
-      render json: @actors, each_serializer: ActorSerializer
+    cache_key = CacheKeys.actor_cache_key(params)
 
+    @actors = Rails.cache.fetch(cache_key, expires_in: 15.minutes) do
+      actors = NameBasic.joins(:professions)
+                 .where('professions.name IN (?)', %w[actor actress])
+      actors = actors.where('primary_name = ?', name.to_s) if name.present?
+      actors = actors.paginate(page: page, per_page: 15)
+      serialized = actors.map do |actor|
+        ActorSerializer.new(actor).as_json
+      end
+      serialized
     end
 
-    printer = RubyProf::GraphHtmlPrinter.new(profile)
-    File.open("ruby-prof-reports/actors_profile.html", "w") do |file|
-      printer.print(file)
-    end
+    render json: @actors
   end
 end

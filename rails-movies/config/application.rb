@@ -1,5 +1,5 @@
 require_relative "boot"
-
+require_relative "../lib/middleware/service_time_logger"
 require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
@@ -15,7 +15,7 @@ module RailsMovies
     # not contain `.rb` files, or that should not be reloaded or eager loaded.
     # Common ones are `templates`, `generators`, or `middleware`, for example.
     config.autoload_lib(ignore: %w(assets tasks))
-
+    config.middleware.use Middleware::ServiceTimeLogger
     # Configuration for the application, engines, and railties goes here.
     #
     # These settings can be overridden in specific environments using the files
@@ -23,5 +23,6 @@ module RailsMovies
     #
     # config.time_zone = "Central Time (US & Canada)"
     # config.eager_load_paths << Rails.root.join("extras")
+    config.autoload_paths += %W(#{config.root}/lib/cache)
   end
 end

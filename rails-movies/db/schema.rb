@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_02_082002) do
+ActiveRecord::Schema[7.1].define(version: 2024_06_21_070748) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -56,6 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_082002) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["nconst"], name: "index_name_basics_on_nconst", unique: true
+    t.index ["primary_name"], name: "index_name_basics_on_primary_name"
   end
 
   create_table "name_basics_professions", id: false, force: :cascade do |t|
@@ -108,6 +109,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_02_082002) do
     t.integer "runtime_minutes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["is_adult"], name: "index_title_basics_on_is_adult"
+    t.index ["primary_title"], name: "index_title_basics_on_primary_title"
+    t.index ["runtime_minutes"], name: "index_title_basics_on_runtime_minutes"
     t.index ["tconst"], name: "index_title_basics_on_tconst", unique: true
   end
 
