@@ -6,19 +6,19 @@ services:
         env_file: .env
         volumes:
             - postgres-data:/var/lib/postgresql/data
-        # command: ["postgres", "-N", "500"]
+        command: ["postgres", "-N", "5000"]
         environment:
             - POSTGRES_DB=${POSTGRES_DB}
             - POSTGRES_USER=${POSTGRES_USER}
             - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
         ports:
             - "5432:5432"
-        # deploy:
-        #   resources:
-        #     limits:
-        #       cpus: '4.0'
-        #     reservations:
-        #       cpus: '3.0'
+        deploy:
+          resources:
+            limits:
+              cpus: '5.0'
+            reservations:
+              cpus: '4.0'
 
     rails:
         container_name: rails-app
@@ -39,6 +39,10 @@ services:
             - db
         ports:
             - "3000:3000"
+        deploy:
+          resources:
+            limits:
+              cpus: '9.0'
 
 volumes:
     postgres-data: {}
