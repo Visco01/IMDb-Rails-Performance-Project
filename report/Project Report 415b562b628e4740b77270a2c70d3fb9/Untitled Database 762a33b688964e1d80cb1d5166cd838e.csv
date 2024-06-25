@@ -1,0 +1,8 @@
+﻿TSV file,Content,Data structure
+title.basics,General information of titles,"Arrays, Booleans, Integers, Strings"
+title.akas,Title’s alternatives,"Arrays, Booleans, Integers, Strings"
+title.crew,Director and writer information,"Arrays, Strings"
+title.episodes,Series’ episode and seasons,"Integers, Strings"
+title.principals,Cast information,"Arrays, Integers, Strings"
+title.ratings,IMDb rating and votes,"Floats, Integers, Strings"
+name.basics,Personas’ informations,"Arrays, Integers, Strings"

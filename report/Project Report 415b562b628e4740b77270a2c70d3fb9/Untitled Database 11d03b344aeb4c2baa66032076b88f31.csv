@@ -1,0 +1,4 @@
+﻿Component,Cores normally assigned,Maximum cores usable
+System,1,2
+Rails,10,10
+PostgreSQL,3,4

@@ -1,0 +1,5 @@
+﻿Job,Response time (avg) in ms,Intensity
+Actors by name,6800,High
+Directors by name,1300,Medium
+Title by primary title,290,Low
+Title by params,310,Low

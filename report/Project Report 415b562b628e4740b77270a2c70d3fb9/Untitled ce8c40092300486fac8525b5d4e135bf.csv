@@ -1,0 +1,6 @@
+﻿Job,Samples,Error,AVG Response time,MAX Response time
+Actors by name,370,0,34008.35,38495
+Directors by name,391,0,6549.54,7908
+Title by parameters,398,0.0603,538.93,7293
+Title by primary title,397,0,2106.87,4717
+TOTAL,1556,0.0154,10408.02,38495

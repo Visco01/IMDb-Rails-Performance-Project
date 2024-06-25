@@ -1,0 +1,6 @@
+﻿Job,Samples,Error,AVG Response time (ms),MAX Response time (ms),MIN Response time (ms)
+Actors by name,11291,0,99.58,1216,37
+Directors by name,11401,0,101.33,109,38
+Title by parameters,11391,0,126.41,2396,40
+Title by primary title,1357,0,104.79,1152,38
+TOTAL,45440,0,108.05,296,37
