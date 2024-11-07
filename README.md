@@ -2,20 +2,6 @@
 
 This project, undertaken as part of Ca’ Foscari University of Venice's "Software Performance and Scalability" course, focuses on deploying and optimizing a web application built to enable users to query a local copy of the IMDb dataset. The goal is to design the application with scalability in mind, identify performance bottlenecks, and apply optimizations for improved response times and resource efficiency.
 
----
-
-## Table of Contents
-1. [Introduction](#introduction)
-2. [Project Goals](#project-goals)
-3. [System Architecture](#system-architecture)
-4. [Software Components](#software-components)
-5. [Hardware Setup](#hardware-setup)
-6. [Dataset Overview](#dataset-overview)
-7. [Performance Optimization Strategies](#performance-optimization-strategies)
-8. [Results and Analysis](#results-and-analysis)
-
----
-
 ## 1. Introduction
 
 The web application provides a platform where users can perform queries on a local copy of the IMDb dataset. The application is built using Docker and Ruby on Rails, with PostgreSQL as the database. It aims to simulate a realistic server environment and handle queries on movie and TV show data efficiently. This project emphasizes identifying inefficiencies and implementing strategies to improve the application's scalability and responsiveness.
